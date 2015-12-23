@@ -1,3 +1,2 @@
-class Sale < ActiveRecord::Base
-  belongs_to :portfolio
+class Sale < Stock
 end

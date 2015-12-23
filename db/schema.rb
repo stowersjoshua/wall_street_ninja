@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625003421) do
+ActiveRecord::Schema.define(version: 20151223072130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,9 @@ ActiveRecord::Schema.define(version: 20150625003421) do
   add_index "bonus", ["portfolio_id"], name: "index_bonus_on_portfolio_id", using: :btree
 
   create_table "companies", force: true do |t|
-    t.integer  "firm_id"
+    t.integer  "stock_id"
+    t.integer  "cik_id"
+    t.integer  "sic_code"
     t.string   "city"
     t.string   "state"
     t.string   "symbol"
@@ -70,8 +72,12 @@ ActiveRecord::Schema.define(version: 20150625003421) do
     t.datetime "updated_at"
   end
 
+  add_index "companies", ["stock_id"], name: "index_companies_on_stock_id", using: :btree
+
   create_table "portfolios", force: true do |t|
     t.float    "balance"
+    t.boolean  "active"
+    t.string   "name"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -79,17 +85,17 @@ ActiveRecord::Schema.define(version: 20150625003421) do
 
   add_index "portfolios", ["user_id"], name: "index_portfolios_on_user_id", using: :btree
 
-  create_table "sales", force: true do |t|
+  create_table "stocks", force: true do |t|
     t.integer  "portfolio_id"
-    t.integer  "firm_id"
     t.string   "type"
     t.integer  "quantity"
-    t.float    "value"
+    t.float    "price"
+    t.float    "total_price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "sales", ["portfolio_id"], name: "index_sales_on_portfolio_id", using: :btree
+  add_index "stocks", ["portfolio_id"], name: "index_stocks_on_portfolio_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -102,8 +108,6 @@ ActiveRecord::Schema.define(version: 20150625003421) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
@@ -112,6 +116,8 @@ ActiveRecord::Schema.define(version: 20150625003421) do
     t.string   "last_name"
     t.string   "city"
     t.string   "state"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
