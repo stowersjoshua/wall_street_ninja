@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  include ApplicationHelper
+  before_filter :configure_permitted_parameters
 
   def create
     super
@@ -11,5 +11,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def edit
     super
+  end
+
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up).push(:email, :username, :first_name, :last_name, :city, :state)
   end
 end
