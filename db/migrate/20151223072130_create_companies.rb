@@ -1,7 +1,6 @@
 class CreateCompanies < ActiveRecord::Migration
   def change
     create_table :companies do |t|
-      t.references :stock, index: true
       t.integer :cik_id
       t.integer :sic_code
       t.string :city
