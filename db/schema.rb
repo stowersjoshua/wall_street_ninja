@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 20151223072130) do
   add_index "bonus", ["portfolio_id"], name: "index_bonus_on_portfolio_id", using: :btree
 
   create_table "companies", force: true do |t|
-    t.integer  "stock_id"
     t.integer  "cik_id"
     t.integer  "sic_code"
     t.string   "city"
@@ -71,8 +70,6 @@ ActiveRecord::Schema.define(version: 20151223072130) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "companies", ["stock_id"], name: "index_companies_on_stock_id", using: :btree
 
   create_table "portfolios", force: true do |t|
     t.float    "balance"
@@ -86,6 +83,7 @@ ActiveRecord::Schema.define(version: 20151223072130) do
   add_index "portfolios", ["user_id"], name: "index_portfolios_on_user_id", using: :btree
 
   create_table "stocks", force: true do |t|
+    t.integer  "company_id"
     t.integer  "portfolio_id"
     t.string   "type"
     t.integer  "quantity"
@@ -95,6 +93,7 @@ ActiveRecord::Schema.define(version: 20151223072130) do
     t.datetime "updated_at"
   end
 
+  add_index "stocks", ["company_id"], name: "index_stocks_on_company_id", using: :btree
   add_index "stocks", ["portfolio_id"], name: "index_stocks_on_portfolio_id", using: :btree
 
   create_table "users", force: true do |t|
