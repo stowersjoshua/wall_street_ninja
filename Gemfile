@@ -49,6 +49,8 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'tzinfo-data'
 gem 'validates_formatting_of'
 gem 'bootstrap-sass'
+# gem 'quandl'
+gem 'quandl_client'
 
 group :development, :test do
   gem 'dotenv-rails'
