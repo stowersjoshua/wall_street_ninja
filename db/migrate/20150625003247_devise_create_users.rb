@@ -37,6 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :last_name
       t.string :city
       t.string :state
+      t.boolean :active, default: true
 
       t.timestamps null: false
     end
