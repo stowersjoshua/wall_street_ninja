@@ -21,7 +21,10 @@ $(document).ready(function(){
 			$("#total_price_"+index).val(0);
 		}
 		$(".total_price").each(function(){
-			total_val = parseInt(total_val) + parseInt($(this).val());
+			if($(this).val()){
+				alert("price");
+				total_val = parseInt(total_val) + parseInt($(this).val());
+			}
 		})
 		$("#portfolio_balance").val(total_val);
 	});

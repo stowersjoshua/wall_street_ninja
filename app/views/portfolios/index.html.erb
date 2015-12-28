@@ -1,9 +1,32 @@
 <h1>Portfolio</h1>
 
 <%= link_to "Create New Portfolio", new_portfolio_path %>
-
+<%= current_user.total_balance %>
 <% if @portfolios.present? %>
-	<% @portfolios.each do |port| %>
-		<%= port.name %>
+	<table>
+		<thead>
+			<th>Index</th>
+			<th>Portfolio Name</th>
+			<th>Status</th>
+			<th>Action</th>
+		</thead>
+		<% @portfolios.each_with_index do |port, index| %>
+			<tbody>
+				<tr>
+					<td>
+						<%= index+1 %>
+					</td>
+					<td>
+						<%= port.name.humanize %>
+					</td>
+					<td>
+						<%= port.active %>
+					</td>
+					<td>
+						<%= link_to "Edit", edit_portfolio_path(port) %> |
+						<%= link_to "Delete", portfolio_path(port), method: :delete %>
+					</td>
+				</tr>
+			</tbody>
 	<% end %>
 <% end %>

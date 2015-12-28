@@ -11,12 +11,38 @@ class PortfoliosController < ApplicationController
 	end
 
 	def create
-		binding.pry
-		if params[:Portfolio][:balance] < current_user.total_balance
+		if params[:portfolio][:balance].to_i < current_user.total_balance
 			portfolio = Portfolio.create(portfolio_permitted_params)
+			current_user.total_balance -= portfolio.balance
+			current_user.save
+			path = portfolios_path
 		else
 			flash[:notice] = "You have not money"
+			path = :back
 		end
+		redirect_to path
+	end
+
+	def edit
+		@portfolio = Portfolio.find(params[:id])
+		render :new
+	end
+
+	def update
+		portfolio = Portfolio.find(params[:id])
+		if portfolio.update_attributes(portfolio_permitted_params)
+			flash[:notice] = "Saved successfully"
+			path = portfolios_path
+		else
+			flash[:notice] = "something going wrong"
+			path = :back
+		end
+		redirect_to path
+	end
+
+	def destroy
+		portfolio = Portfolio.find(params[:id])
+		portfolio.destroy
 		redirect_to portfolios_path
 	end
 

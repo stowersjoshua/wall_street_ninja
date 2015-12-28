@@ -1,33 +1,54 @@
-<%= simple_nested_form_for(@portfolio, url: portfolios_path) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :name, required: true, placeholder: "Portfolio Name", input_html: {class: 'form-control'} %>
+
+<%= simple_nested_form_for(@portfolio, url: (@portfolio.new_record? ? portfolios_path : portfolio_path(@portfolio)), method: (@portfolio.new_record? ? :post : :put)) do |f| %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-inputs">
+        <%= f.input :name, required: true, placeholder: "Portfolio Name", input_html: {class: 'form-control'} %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.input :balance, label: "Total", placeholder: "0",  input_html: { class: 'form-control', value: (@portfolio.new_record? ? 0 : f.object.balance), readonly: true } %>
+      </div>
+    </div>
   </div>
 
   <%= f.fields_for :stocks do |st| %>
-    <%= st.input :type, as: :hidden, label: false, input_html: { value: "Purchase", class: 'form-control' } %>
-    <div class="form-group">
-      <%= st.input :company_id, collection: Company.all.map{|c| [c.name, c.id]}, as: :select, required: true, label: "Company", include_blank: false,prompt: "Select Company", input_html: {class: 'form-control select_company', "data-attr" => st.options[:child_index] } %>
-    </div>
+    <div class="row">
+      <%= st.input :type, as: :hidden, label: false, input_html: { value: "Purchase", class: 'form-control' } %>
 
-    <div class="form-group">
-      <%= st.input :price, required: true, label: "Price", placeholder: "Price", input_html: { class: 'form-control', id: "price_#{st.options[:child_index]}", readonly: true } %>
-    </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <%= st.input :company_id, collection: Company.all.map{|c| [c.name, c.id]}, as: :select, required: true, label: "Company", include_blank: false,prompt: "Select Company", input_html: {class: 'form-control select_company', "data-attr" => st.options[:child_index] } %>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <%= st.input :quantity, required: true, label: "Quantity", placeholder: "Enter Quantity",  input_html: { class: 'form-control enter_quantity', "data-attr" => st.options[:child_index] } %>
-    </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <%= st.input :price, required: true, label: "Price", placeholder: "Price", input_html: { class: 'form-control', id: "price_#{st.options[:child_index]}", readonly: true } %>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <%= st.input :total_price, required: true, label: "Total Price", placeholder: "Total Price",  input_html: { class: 'form-control total_price', id: "total_price_#{st.options[:child_index]}", readonly: true} %>
+      <div class="col-md-3">
+        <div class="form-group">
+          <%= st.input :quantity, required: true, label: "Quantity", placeholder: "Enter Quantity",  input_html: { class: 'form-control enter_quantity', "data-attr" => st.options[:child_index] } %>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group">
+          <%= st.input :total_price, required: true, label: "Total Price", placeholder: "Total Price",  input_html: { class: 'form-control total_price', id: "total_price_#{st.options[:child_index]}", readonly: true} %>
+        </div>
+      </div>  
     </div>
   <% end %>
-  <%= f.link_to_add "add more company", :stocks %>
+  <%= f.link_to_add "+Add More Company", :stocks, style: "float: right;" %>
 
-  <div class="form-group">
-    <%= f.input :balance, label: "Total", placeholder: "0",  input_html: { class: 'form-control', value: 0, readonly: true } %>
-  </div>
-
-  <div class="form-group submit_form_btn">
-    <%= f.button :submit, "Create Portfolio", class: 'btn btn-primary', data: {disable_with: "Please Wait..."}  %>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= f.button :submit, "Create Portfolio", class: 'btn btn-primary', data: {disable_with: "Please Wait..."}  %>
+      </div>
+    </div>
   </div>
 <% end %>
