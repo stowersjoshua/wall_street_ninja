@@ -1,5 +1,5 @@
 ActiveAdmin.register Company do
-  permit_params :cik_id, :sic_code, :city, :state, :symbol, :name, :description
+  permit_params :cik_code, :sic_code, :city, :state, :symbol, :name, :description
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -13,6 +13,5 @@ ActiveAdmin.register Company do
 #   permitted << :other if resource.something?
 #   permitted
 # end
-
 
 end

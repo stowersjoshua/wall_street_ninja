@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20151223072130) do
   add_index "bonus", ["portfolio_id"], name: "index_bonus_on_portfolio_id", using: :btree
 
   create_table "companies", force: true do |t|
-    t.integer  "cik_id"
+    t.integer  "cik_code"
     t.integer  "sic_code"
     t.string   "city"
     t.string   "state"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20151223072130) do
 
   create_table "portfolios", force: true do |t|
     t.float    "balance"
-    t.boolean  "active"
+    t.boolean  "active",     default: false
     t.string   "name"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20151223072130) do
     t.string   "city"
     t.string   "state"
     t.boolean  "active",                 default: true
+    t.float    "total_balance"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end

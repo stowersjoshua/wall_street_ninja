@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :active, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :username, :first_name, :last_name, :city, :state
+  permit_params :email, :active, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :username, :first_name, :last_name, :city, :state, :total_balance
 
 
   index do
@@ -13,6 +13,7 @@ ActiveAdmin.register User do
     column :sign_in_count
     column :created_at
     column :active
+    column :total_balance
     actions
   end
 
@@ -31,6 +32,7 @@ ActiveAdmin.register User do
     	f.input :first_name
     	f.input :last_name
     	f.input :active, as: :select, collection: [true, false], include_blank: false
+      f.input :total_balance
       f.input :email
       f.input :password
       f.input :password_confirmation

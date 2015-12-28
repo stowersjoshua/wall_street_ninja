@@ -71,4 +71,10 @@ Rails.application.routes.draw do
     get    "account" => "users/registrations#edit",   as: :edit_user_registration
   end
 
+  resources :portfolios do 
+    member do 
+      get :fetch_current_price
+    end
+  end
+
 end
