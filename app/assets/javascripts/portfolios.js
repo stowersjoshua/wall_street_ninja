@@ -22,7 +22,6 @@ $(document).ready(function(){
 		}
 		$(".total_price").each(function(){
 			if($(this).val()){
-				alert("price");
 				total_val = parseInt(total_val) + parseInt($(this).val());
 			}
 		})
