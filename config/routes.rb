@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'landings#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -71,10 +70,18 @@ Rails.application.routes.draw do
     get    "account" => "users/registrations#edit",   as: :edit_user_registration
   end
 
-  resources :portfolios do 
-    member do 
-      get :fetch_current_price
+  resources :landings do
+    collection do
+      get :companies
     end
   end
 
+  resources :portfolios do 
+    member do 
+      get :fetch_current_price
+      get :change_status
+    end
+  end
+
+  root 'landings#index'
 end

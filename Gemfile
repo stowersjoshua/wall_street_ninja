@@ -50,8 +50,9 @@ gem 'tzinfo-data'
 gem 'validates_formatting_of'
 gem 'bootstrap-sass'
 # gem 'quandl'
-gem 'quandl_client'
-gem "nested_form"
+# gem 'quandl_client'
+gem 'nested_form'
+gem 'httparty'
 
 group :development, :test do
   gem 'dotenv-rails'

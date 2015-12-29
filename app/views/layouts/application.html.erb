@@ -12,5 +12,7 @@
 			<%= yield %>
 			<%= render "shared/footer" %>
 		</div>
+		<%= render "shared/notification" if flash[:notice].present? %>
+  	<% flash.clear %>
 	</body>
 </html>

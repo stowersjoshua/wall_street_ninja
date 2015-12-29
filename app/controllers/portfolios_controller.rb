@@ -1,4 +1,5 @@
 class PortfoliosController < ApplicationController
+	include HTTParty
 	before_action :authenticate_user!
 	
 	def index
@@ -11,7 +12,7 @@ class PortfoliosController < ApplicationController
 	end
 
 	def create
-		if params[:portfolio][:balance].to_i < current_user.total_balance
+		if params[:portfolio][:balance].to_f < current_user.total_balance.to_f
 			portfolio = Portfolio.create(portfolio_permitted_params)
 			current_user.total_balance -= portfolio.balance
 			current_user.save
@@ -47,6 +48,28 @@ class PortfoliosController < ApplicationController
 	end
 
 	def fetch_current_price
+		company = Company.find(params[:id])
+		token = Rails.application.secrets.quandl_token
+		url = Rails.application.secrets.quandl_url
+		response = HTTParty.get("#{url}WIKI/MMM.json?token=#{token}&rows=1&column_index=4")
+		@price = response["dataset"]["data"][0][1]
+	end
+
+	def change_status
+		portfolio = Portfolio.find(params[:id])
+		current_user.portfolios.update_all(active: false)
+		if portfolio.update_attributes(active: params[:status])
+			@portfolios = Portfolio.all
+			flash[:notice] = "Portfolio status change successfully."
+		end
+	end
+
+	def companies
+		@companies = Company.all
+	end
+
+	def company_details
+		@company = Company.find(params[:id])
 	end
 
 	private

@@ -1,0 +1,15 @@
+<script>
+    var message = "<%=flash.to_hash.values.join(", ")%>"
+    $(function () {
+        $.growl({
+            title: "",
+            message: message,
+            namespace: "growl",
+            duration: 5000,
+            close: "&#215;",
+            location: "tc",
+            style: "default",
+            size: "medium",
+        });
+    });
+</script>

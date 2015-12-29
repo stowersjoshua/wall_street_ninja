@@ -1,1 +1,3 @@
-$("#price_<%= params[:index]%>").val("100");
+var price = <%= @price %>;
+console.log(price);
+$("#price_<%= params[:index]%>").val(price);

@@ -14,4 +14,21 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery_nested_form
+//= require jquery.growl.js
 //= require_tree .
+
+function show_flash(message){
+  if(message)
+  {
+    $.growl({
+      title: "",
+      message: message,
+      namespace: "growl",
+      duration: 5000,
+      close: "&#215;",
+      location: "tc",
+      style: "default",
+      size: "medium",
+    });
+  }
+}
