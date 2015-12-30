@@ -38,13 +38,18 @@
           <div class="form-group">
             <%= st.input :quantity, required: true, label: "Quantity", placeholder: "Enter Quantity",  input_html: { class: 'form-control enter_quantity', "data-attr" => st.options[:child_index] } %>
           </div>
-        </div>
+        </div>  
 
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <%= st.input :total_price, required: true, label: "Total Price", placeholder: "Total Price",  input_html: { class: 'form-control total_price', id: "total_price_#{st.options[:child_index]}", readonly: true} %>
           </div>
-        </div>  
+        </div>
+        <div class="col-md-1">
+          <%= st.link_to_remove(href: "javascript:void(0)", class: "close_icon") do %>
+            <%= image_tag 'input_icon.png', width: 10, height: 10 %>
+          <% end %>
+        </div>
       </div>
     <% end %>
     <%= f.link_to_add "+Add More Company", :stocks, style: "float: right;" %>

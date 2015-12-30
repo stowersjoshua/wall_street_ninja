@@ -7,15 +7,16 @@
 		</div>
 	</div>
 	<div id="portfolio_contents">		
-		<%#= render "portfolio_contents" %>
+		<% if @portfolio.present? %>
+			<% companies = @portfolio.companies.present? ? @portfolio.companies.map{|c| [c.name, c.id]} : [] %>
+			<%= form_tag sale_shares_sales_path do %>
+				<%= select_tag :company, options_for_select(companies), prompt: "Select Company", id: "company_change"%>
+				<div id="share_select">
+					<%= render "share_select", options: [] %>
+				</div>
 
-		<%= form_tag sale_shares_sales_path do %>
-			<%= select_tag :company, options_for_select(@portfolio.companies.map{|c| [c.name, c.id]}), prompt: "Select Company", id: "company_change"%>
-			<div id="share_select">
-				<%= render "share_select", options: [] %>
-			</div>
-
-			<%= submit_tag "Sold" %>
+				<%= submit_tag "Sold" %>
+			<%end%> 
 		<%end%> 
 	</div>	
 </div>		

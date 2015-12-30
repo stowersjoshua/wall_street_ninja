@@ -15,7 +15,7 @@ class LandingsController < ApplicationController
   	@company = Company.find(params[:id])
   	token = Rails.application.secrets.quandl_token
 		url = Rails.application.secrets.quandl_url
-		response = HTTParty.get("#{url}WIKI/MMM.json?token=#{token}&rows=10")
+		response = HTTParty.get("#{url}#{@company.free_code}.json?token=#{token}&rows=10")
 		@company_details = response["dataset"]
   end
 end

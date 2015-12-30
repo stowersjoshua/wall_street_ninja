@@ -51,7 +51,7 @@ class PortfoliosController < ApplicationController
 		company = Company.find(params[:id])
 		token = Rails.application.secrets.quandl_token
 		url = Rails.application.secrets.quandl_url
-		response = HTTParty.get("#{url}WIKI/MMM.json?token=#{token}&rows=1&column_index=4")
+		response = HTTParty.get("#{url}#{company.free_code}.json?token=#{token}&rows=1&column_index=4")
 		@price = response["dataset"]["data"][0][1]
 	end
 

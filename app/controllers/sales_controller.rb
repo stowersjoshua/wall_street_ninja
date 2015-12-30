@@ -21,5 +21,6 @@ class SalesController < ApplicationController
 		price = response["dataset"]["data"][0][1]
 		balance = (current_user.total_balance + (params[:no_of_shares].to_i * price))
 		current_user.update_attributes(total_balance: balance)
+		render text: "work in progress..."
 	end
 end
