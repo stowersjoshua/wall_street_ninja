@@ -28,12 +28,11 @@ $(document).ready(function(){
 		$("#portfolio_balance").val(total_val.toFixed(2));
 	});
 
-	$(document).on("change", ".portfolio_change_status", function(){
-		var status = $(this).val();
-		var port_id = $(this).attr("data_attr");
-		if(status){
-			var url = "/portfolios/"+ port_id +"/change_status";
-			$.get(url, {status: status, format: "js"}, function (data) {
+	$(document).on("change", "#company_change", function(){
+		var company_id = $(this).val()
+		if(company_id){
+			var url = "/sales/fetch_share_quantity";
+			$.get(url, {company_id: company_id, format: "js"}, function (data) {
 	    });
 		}
 	});

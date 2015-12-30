@@ -74,6 +74,17 @@ Rails.application.routes.draw do
     collection do
       get :companies
     end
+
+    member do
+      get :company_details
+    end
+  end
+
+  resources :sales do
+    collection do
+      get :fetch_share_quantity
+      post :sale_shares
+    end
   end
 
   resources :portfolios do 

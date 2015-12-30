@@ -3,7 +3,7 @@ class PortfoliosController < ApplicationController
 	before_action :authenticate_user!
 	
 	def index
-		@portfolios = Portfolio.all
+		@portfolios = current_user.portfolios
 	end
 
 	def new
@@ -58,7 +58,7 @@ class PortfoliosController < ApplicationController
 	def change_status
 		portfolio = Portfolio.find(params[:id])
 		current_user.portfolios.update_all(active: false)
-		if portfolio.update_attributes(active: params[:status])
+		if portfolio.update_attributes(active: true)
 			@portfolios = Portfolio.all
 			flash[:notice] = "Portfolio status change successfully."
 		end

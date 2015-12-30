@@ -1,0 +1,57 @@
+<div class="row">
+	<div class="col-md-4">
+		<%= portfolio.name %>
+	</div>
+	<div class="col-md-4">
+		<% portfolio.purchases.each do |purchase| %>
+			<%= purchase.quantity %>
+			<%= purchase.price %>
+			<%= purchase.total_price %>
+			<br>
+		<% end %>
+	</div>
+	<% companies = portfolio.purchases.group_by(&:company).keys %>
+	<% companies.each do |company| %>
+		<div class="col-md-4">
+			<%= company.name %>
+			<%#= company.quantity %>
+			<%#= company.total_price %>
+		</div>
+		<div class="clear"></div>
+	<% end %>
+</div>
+
+  <h2><%= portfolio.name %></h2>
+  <!-- <p>The panel-group class clears the bottom-margin. Try to remove the class and see what happens.</p> -->
+<div class="row">
+	<%portfolio.companies.each_with_index do |cmp, i|%>
+	  <div class="panel-group">
+	    <div class="col-md-4">
+	      <div class="panel panel-default">
+	        <div class="panel-heading"><%= link_to cmp.name, company_details_landing_path(cmp) %></div>
+	        <div class="panel-body">
+	        	<%= cmp.description.truncate(40) rescue nil %>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  <%if (i+1) % 3 == 0 %><br><%end%>
+	<%end%>
+</div>
+<hr>
+<br>
+<h2>Other Portfolios</h2>
+  <!-- <p>The panel-group class clears the bottom-margin. Try to remove the class and see what happens.</p> -->
+<div class="row">
+	<% @portfolios.each do |port| %>
+		<div class="col-md-4">
+			<%= port.name %>
+		</div>
+		<div class="col-md-4">
+			<%= port.balance %>
+		</div>
+		<div class="col-md-4">
+			<%= port.active %>
+		</div>
+	<% end %>
+</div>

@@ -1,41 +1,50 @@
 <% if @portfolios.present? %>
-	<div class="row">
-		<div class="col-md-2">
-			<strong>Index</strong>
-		</div>
-		<div class="col-md-2">
-			<strong>Status</strong>
-		</div>
-		<div class="col-md-3">
-			<strong>Portfolio Name</strong>
-		</div>
-		<div class="col-md-2">
-			<strong>Total Investment</strong>
-		</div>
-		<div class="col-md-3">
-			<strong>Action</strong>
-		</div>
-	</div>
-	<% @portfolios.each_with_index do |port, index| %>
-		<div class="row">
-			<div class="col-md-2">
-				<%= index+1 %>.
-			</div>
-			<div class="col-md-2">
-				<div class="form-group">
-					<%= select_tag :active, options_for_select([true, false], port.active), prompt: "Select Status", data_attr: "#{port.id}", include_blank: false, class: "portfolio_change_status form-control" %>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<%= port.name.humanize %>
-			</div>
-			<div class="col-md-2">
-				<%= port.balance %>
-			</div>
-			<div class="col-md-3">
-				<%= link_to "Edit", edit_portfolio_path(port) %> |
-				<%= link_to "Delete", portfolio_path(port), method: :delete %>
-			</div>
-		</div>
-	<% end %>
+	<table class="table table-striped table-hover ">
+		<thead>
+			<th>
+				<strong>Index</strong>
+			</th>
+			<th>
+				<strong>Portfolio Name</strong>
+			</th>
+			<th>
+				<strong>Status</strong>
+			</th>
+			<th>
+				<strong>Total Quantity</strong>
+			</th>
+			<th>
+				<strong>Total Investment</strong>
+			</th>
+			<th>
+				<strong>Action</strong>
+			</th>
+		</thead>
+		<tbody>
+			<% @portfolios.each_with_index do |port, index| %>
+				<tr>
+					<td>
+						<%= index+1 %>.
+					</td>
+					<td>
+						<%= port.name.humanize %>
+					</td>
+					<td>
+						<%= port.active %>
+					</td>
+					<td>
+						<%= port.purchases.map(&:quantity).sum if port.purchases.present? %>
+					</td>
+					<td>
+						<%= port.balance %>
+					</td>
+					<td>
+						<%= link_to "Make Active", change_status_portfolio_path(port), remote: true %>  |  
+						<%= link_to "Edit", edit_portfolio_path(port) %>  |  
+						<%= link_to "Delete", portfolio_path(port), method: :delete %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 <% end %>

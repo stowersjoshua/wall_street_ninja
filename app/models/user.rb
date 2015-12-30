@@ -43,4 +43,18 @@ class User < ActiveRecord::Base
 
 
   devise authentication_keys: [:login]
+
+
+  def check_portfolio_status
+    portfolio = self.portfolios.where(active: true)
+    if portfolio.present?
+      return portfolio
+    else
+      return false
+    end
+ end
+
+ def active_portfolio
+  self.portfolios.where(active: true).first
+ end
 end

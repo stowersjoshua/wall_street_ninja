@@ -1,6 +1,15 @@
 <h1>Welcome to Wall Street Ninja</h1>
 <% if user_signed_in? %>
-	<p>You are successfully logged in.</p>
+	<% if current_user.portfolios.present? %>
+		<% portfolio = current_user.check_portfolio_status %>
+		<% if portfolio %>
+			<%= render "/portfolios/portfolio_details", portfolio: portfolio.first %>
+		<% else %>
+			<p>please make your portfolio active.</p>
+		<% end %>
+	<% else %>
+		<p>Please create portfolio and make that's status active.</p>
+	<% end %>
 <% else %>
 	<p>If you are already login, please <%= link_to "Sign In", new_user_session_path() %>, Otherwise please <%= link_to "Sign Up", new_user_registration_path() %> First.</p>
 <% end %>

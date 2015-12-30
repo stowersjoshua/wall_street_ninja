@@ -3,6 +3,8 @@ class CreateCompanies < ActiveRecord::Migration
     create_table :companies do |t|
       t.integer :cik_code
       t.integer :sic_code
+      t.string :free_code
+      t.string :premium_code
       t.string :city
       t.string :state
       t.string :symbol

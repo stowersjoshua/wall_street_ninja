@@ -1,0 +1,38 @@
+<% if @companies.present? %>
+	<div class="row">
+		<div class="col-md-2">
+			<strong>Index</strong>
+		</div>
+		<div class="col-md-2">
+			<strong>Company Name</strong>
+		</div>
+		<div class="col-md-3">
+			<strong>city</strong>
+		</div>
+		<div class="col-md-2">
+			<strong>State</strong>
+		</div>
+		<div class="col-md-3">
+			<strong>Action</strong>
+		</div>
+	</div>
+	<% @companies.each_with_index do |company, index| %>
+		<div class="row">
+			<div class="col-md-2">
+				<%= index+1 %>.
+			</div>
+			<div class="col-md-2">
+				<%= company.name %>
+			</div>
+			<div class="col-md-3">
+				<%= company.city %>
+			</div>
+			<div class="col-md-2">
+				<%= company.state %>
+			</div>
+			<div class="col-md-3">
+				<%= link_to "Company Details", company_details_landing_path(company) %>
+			</div>
+		</div>
+	<% end %>
+<% end %>

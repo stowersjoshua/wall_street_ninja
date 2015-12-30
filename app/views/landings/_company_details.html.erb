@@ -1,0 +1,32 @@
+<% if @company.present? %>
+	<div class="row">
+		<strong>Company Name</strong> : <%= @company.name %>
+	</div>
+	<div class="row">
+		<strong>city</strong> : <%= @company.city %>
+	</div>
+	<div class="row">
+		<strong>State</strong> : <%= @company.state %>
+	</div>
+	<div class="row">
+		<strong>Description</strong> : <%= @company.description %>
+	</div>
+<% end %>
+<h2><strong> Last 10 working days company details</strong></h2>
+<div class="row">
+	<% @company_details["column_names"].each do |column| %>
+		<div class="table_col">
+			<strong><%= column %></strong>
+		</div>
+	<% end %>
+</div>
+
+<% @company_details["data"].each do |data| %>
+	<div class="row">
+	  <% data.each do |d| %>
+		  <div class="table_col">
+		  	<%= d %>
+			</div>
+		<% end %>
+	</div>
+<% end %>
