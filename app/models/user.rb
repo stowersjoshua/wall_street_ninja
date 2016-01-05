@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
   has_many :portfolios, dependent: :destroy
   validates :email, :first_name, :last_name, :username, :city, :state, presence: true
   validates_inclusion_of :active, :in => [true, false]
+  after_create :update_user_balance
+  attr_accessor :login
+  devise authentication_keys: [:login]
+  
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(provider: auth.provider, uid: auth.uid).first
 
@@ -27,9 +31,6 @@ class User < ActiveRecord::Base
                 email:    auth.info.email,
                 password: Devise.friendly_token[0,20])
   end
-
-
-  attr_accessor :login
   
   #->Prelang (user_login:devise/username_login_support)
   def self.find_first_by_auth_conditions(warden_conditions)
@@ -41,20 +42,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def active_portfolio
+    self.portfolios.where(active: true).first
+  end
 
-  devise authentication_keys: [:login]
-
-
-  def check_portfolio_status
-    portfolio = self.portfolios.where(active: true)
-    if portfolio.present?
-      return portfolio
-    else
-      return false
-    end
- end
-
- def active_portfolio
-  self.portfolios.where(active: true).first
- end
+  def update_user_balance
+    self.update_attributes(total_balance: 100000)
+  end
 end

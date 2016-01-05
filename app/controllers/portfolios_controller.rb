@@ -1,5 +1,4 @@
 class PortfoliosController < ApplicationController
-	include HTTParty
 	before_action :authenticate_user!
 	
 	def index
@@ -8,7 +7,7 @@ class PortfoliosController < ApplicationController
 
 	def new
 		@portfolio = Portfolio.new
-		@portfolio.stocks.build unless @portfolio.stocks.present?
+		@portfolio.purchases.build unless @portfolio.purchases.present?
 	end
 
 	def create
@@ -49,10 +48,8 @@ class PortfoliosController < ApplicationController
 
 	def fetch_current_price
 		company = Company.find(params[:id])
-		token = Rails.application.secrets.quandl_token
-		url = Rails.application.secrets.quandl_url
-		response = HTTParty.get("#{url}#{company.free_code}.json?token=#{token}&rows=1&column_index=4")
-		@price = response["dataset"]["data"][0][1]
+		response = QuandlService::Quandl.get_quandl_data(company.id, 1)
+		@price = response["dataset"]["data"][0][4]
 	end
 
 	def change_status

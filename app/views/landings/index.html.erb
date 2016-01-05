@@ -1,9 +1,8 @@
 <h1>Welcome to Wall Street Ninja</h1>
 <% if user_signed_in? %>
 	<% if current_user.portfolios.present? %>
-		<% portfolio = current_user.check_portfolio_status %>
-		<% if portfolio %>
-			<%= render "/portfolios/portfolio_details", portfolio: portfolio.first %>
+		<% if @active_portfolio.present? %>
+			<%= render "/portfolios/portfolio_details" %>
 		<% else %>
 			<p>please make your portfolio active.</p>
 		<% end %>

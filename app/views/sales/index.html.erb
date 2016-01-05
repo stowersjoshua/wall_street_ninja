@@ -1,22 +1,29 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-10">
-			<h1>Sale You Shares</h1>
+			<h1>Sale Your Shares</h1>
 		</div>
 		<div class="col-md-2">
 		</div>
 	</div>
-	<div id="portfolio_contents">		
-		<% if @portfolio.present? %>
-			<% companies = @portfolio.companies.present? ? @portfolio.companies.map{|c| [c.name, c.id]} : [] %>
-			<%= form_tag sale_shares_sales_path do %>
-				<%= select_tag :company, options_for_select(companies), prompt: "Select Company", id: "company_change"%>
-				<div id="share_select">
+	<% if @portfolio.present? %>
+		<%= form_tag sale_shares_sales_path do %>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-inputs">
+						<%= select_tag :company, options_for_select(@companies), prompt: "Select Company", id: "company_change", class: "form-control" %>
+					</div>
+				</div>
+				<div id="share_select" class="col-md-3">
 					<%= render "share_select", options: [] %>
 				</div>
-
-				<%= submit_tag "Sold" %>
-			<%end%> 
+				<div class="col-md-3">
+					<%= submit_tag "Sold", class: "btn btn-primary" %>
+				</div>
+			</div>
 		<%end%> 
-	</div>	
+	<%end%>
+	<div id="sales_contents">		
+		<%= render "sales_contents" %>
+	</div>
 </div>		

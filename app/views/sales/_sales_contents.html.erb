@@ -1,0 +1,53 @@
+<% if @sales.present? %>
+	<hr>
+	</br>
+	<h2>Saled share lists</h2>
+	<div class="row">
+		<table class="table table-striped table-hover ">
+			<thead>
+				<th>
+					<strong>Index</strong>
+				</th>
+				<th>
+					<strong>Portfolio Name</strong>
+				</th>
+				<th>
+					<strong>Company Name</strong>
+				</th>
+				<th>
+					<strong>Price</strong>
+				</th>
+				<th>
+					<strong>Soled Quantity</strong>
+				</th>
+				<th>
+					<strong>Soled Amount</strong>
+				</th>
+			</thead>
+			<tbody>
+				<% @sales.each_with_index do |sale, index| %>
+					<tr>
+						<td>
+							<%= index+1 %>.
+						</td>
+						<td>
+							<%= sale.portfolio.name.humanize %>
+						</td>
+						<td>
+							<%= sale.company.name %>
+						</td>
+						<td>
+							<%= sale.price %>
+						</td>
+						<td>
+							<%= sale.quantity %>
+						</td>
+						<td>
+							<%= sale.total_price %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+<% end %>

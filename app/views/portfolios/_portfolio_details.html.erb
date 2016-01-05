@@ -1,57 +1,58 @@
 <div class="row">
 	<div class="col-md-4">
-		<%= portfolio.name %>
+		<h2><strong><%= @active_portfolio.name.titleize %></strong></h2>
 	</div>
-	<div class="col-md-4">
-		<% portfolio.purchases.each do |purchase| %>
-			<%= purchase.quantity %>
-			<%= purchase.price %>
-			<%= purchase.total_price %>
-			<br>
-		<% end %>
-	</div>
-	<% companies = portfolio.purchases.group_by(&:company).keys %>
-	<% companies.each do |company| %>
-		<div class="col-md-4">
-			<%= company.name %>
-			<%#= company.quantity %>
-			<%#= company.total_price %>
-		</div>
-		<div class="clear"></div>
-	<% end %>
 </div>
 
-  <h2><%= portfolio.name %></h2>
-  <!-- <p>The panel-group class clears the bottom-margin. Try to remove the class and see what happens.</p> -->
 <div class="row">
-	<%portfolio.companies.each_with_index do |cmp, i|%>
-	  <div class="panel-group">
-	    <div class="col-md-4">
-	      <div class="panel panel-default">
-	        <div class="panel-heading"><%= link_to cmp.name, company_details_landing_path(cmp) %></div>
-	        <div class="panel-body">
-	        	<%= cmp.description.truncate(40) rescue nil %>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	  <%if (i+1) % 3 == 0 %><br><%end%>
-	<%end%>
+	<table class="table table-striped table-hover">
+		<thead>
+			<th>Company</th>
+			<th>Live Price</th>
+			<th>Quantity</th>
+			<th>Inv. Price</th>
+			<th>Inv. Amount</th>
+			<th>Inv. Date</th>
+			<th>Latest Value</th>
+			<th>Overall Gain</th>
+		</thead>
+		<tbody>
+			<% @data.each_with_index do |purchase, index| %>
+				<tr>
+					<td><%= link_to purchase[:company_name], company_details_landing_path(purchase[:company_id]) %></td>
+					<td><%= purchase[:live_price] %></td>
+					<td><%= purchase[:quantity] %></td>
+					<td><%= purchase[:inv_price] %></td>
+					<td><%= purchase[:inv_amount] %></td>
+					<td><%= purchase[:inv_date] %></td>
+					<td><%= purchase[:lat_value] %></td>
+					<td><%= purchase[:overall_gain] %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
-<hr>
-<br>
-<h2>Other Portfolios</h2>
-  <!-- <p>The panel-group class clears the bottom-margin. Try to remove the class and see what happens.</p> -->
-<div class="row">
-	<% @portfolios.each do |port| %>
-		<div class="col-md-4">
-			<%= port.name %>
-		</div>
-		<div class="col-md-4">
-			<%= port.balance %>
-		</div>
-		<div class="col-md-4">
-			<%= port.active %>
-		</div>
-	<% end %>
-</div>
+
+<% if @portfolios.present? %>
+	<hr>
+	<br>
+	<h2><strong>Other Portfolios</strong></h2>
+	<div class="row">
+		<table class="table table-striped table-hover">
+			<thead>
+				<th>Portfolio Name</th>
+				<th>Balance</th>
+				<th>Is Active</th>
+			</thead>
+			<tbody>
+				<% @portfolios.each do |port| %>
+					<tr>
+						<td><%= port.name %></td>
+						<td><%= port.balance %></td>
+						<td><%= port.active %></td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+<% end %>

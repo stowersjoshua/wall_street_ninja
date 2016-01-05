@@ -3,6 +3,7 @@ $(document).ready(function(){
 		var company_id = $(this).val()
 		var index = $(this).attr("data-attr");
 		if(company_id){
+			$(".filter_loader").removeClass("dis_none");
 			var url = "/portfolios/"+ company_id +"/fetch_current_price";
 			$.get(url, {index: index, format: "js"}, function (data) {
 	    });
@@ -20,7 +21,7 @@ $(document).ready(function(){
 		}else{
 			$("#total_price_"+index).val(0);
 		}
-		$(".total_price").each(function(){
+		$(".total_price:visible").each(function(){
 			if($(this).val()){
 				total_val = parseFloat(total_val) + parseFloat($(this).val());
 			}
@@ -35,5 +36,15 @@ $(document).ready(function(){
 			$.get(url, {company_id: company_id, format: "js"}, function (data) {
 	    });
 		}
+	});
+
+	$(document).on("click", "#rm_port", function(){
+		var total_val = 0
+		$(".total_price:visible").each(function(){
+			if($(this).val()){
+				total_val = parseFloat(total_val) + parseFloat($(this).val());
+				$("#portfolio_balance").val(total_val);
+			}
+		});
 	});
 });

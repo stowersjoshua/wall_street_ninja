@@ -1,1 +1,1 @@
-$("#share_select").html('<%= escape_javascript( render partial: "share_select", locals: {options: (0..@no_of_shares).to_a}) %>');
+$("#share_select").html('<%= escape_javascript( render partial: "share_select", locals: {options: (1..@no_of_shares).to_a}) %>');
