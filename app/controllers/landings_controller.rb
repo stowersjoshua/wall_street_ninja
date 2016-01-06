@@ -30,9 +30,9 @@ class LandingsController < ApplicationController
     end
   end
 
-  # def companies
-  # 	@companies = Company.all
-  # end
+  def companies
+  	@companies = Company.all
+  end
 
   def company_details
   	@company = Company.find(params[:id])

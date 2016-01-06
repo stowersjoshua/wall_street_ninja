@@ -13,20 +13,20 @@
 	</div>
 <% end %>
 <h2><strong> Last 10 working days company details</strong></h2>
-<div class="row">
-	<% @company_details["column_names"].each do |column| %>
-		<div class="table_col">
-			<strong><%= column %></strong>
-		</div>
-	<% end %>
-</div>
 
-<% @company_details["data"].each do |data| %>
-	<div class="row">
-	  <% data.each do |d| %>
-		  <div class="table_col">
-		  	<%= d %>
-			</div>
+<table class="table table-striped table-hover">
+	<thead>
+		<% @company_details["column_names"].each do |column| %>
+			<th><%= column %></th>
 		<% end %>
-	</div>
-<% end %>
+	</thead>
+	<tbody>
+		<% @company_details["data"].each do |data| %>
+			<tr>
+			  <% data.each do |d| %>
+				  <td><%= d %></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
