@@ -1,0 +1,18 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Article List</h1>
+		</div>
+		<div class="col-md-6">
+			<%= form_tag("/landings/article_search", method: :get, remote: true) do %>
+				<div class="form-inputs">
+          <%= text_field_tag "search", "", placeholder: "Article Title Or Summary", class: "form-control wdt60" %>
+          <%= submit_tag "Search", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+		</div>
+	</div>
+	<div id="article_contents">		
+		<%= render "article_contents" %>
+	</div>		
+</div>		

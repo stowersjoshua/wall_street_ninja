@@ -49,10 +49,11 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'tzinfo-data'
 gem 'validates_formatting_of'
 gem 'bootstrap-sass'
-# gem 'quandl'
-# gem 'quandl_client'
 gem 'nested_form'
 gem 'httparty'
+gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'carrierwave'
+gem 'mini_magick'
 
 group :development, :test do
   gem 'dotenv-rails'

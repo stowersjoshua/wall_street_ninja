@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   get 'landings/index'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -73,10 +74,13 @@ Rails.application.routes.draw do
   resources :landings do
     collection do
       get :companies
+      get :learning_lounge
+      get :article_search
     end
 
     member do
       get :company_details
+      get :learning_lounge_detail
     end
   end
 

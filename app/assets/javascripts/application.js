@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require jquery_nested_form
 //= require jquery.growl.js
+//= require ckeditor/init
 //= require_tree .
 
 function show_flash(message){

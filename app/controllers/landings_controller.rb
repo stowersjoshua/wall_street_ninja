@@ -39,4 +39,17 @@ class LandingsController < ApplicationController
     response = QuandlService::Quandl.get_quandl_data(@company.id, 10)
 		@company_details = response["dataset"]
   end
+
+  def learning_lounge
+    @articles = Article.all
+  end
+
+  def learning_lounge_detail
+    @article = Article.find(params[:id])
+  end
+
+  def article_search
+    search = params[:search]
+    @articles = Article.where("title LIKE ? OR summary LIKE ?", "%#{search}%", "%#{search}%")
+  end 
 end
