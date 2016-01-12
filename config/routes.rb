@@ -84,6 +84,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # resources :institutions
+  resources :academies
+
   resources :sales do
     collection do
       get :fetch_share_quantity

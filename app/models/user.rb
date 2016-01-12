@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   #->Prelang (user_login/devise)
   has_many :portfolios, dependent: :destroy
+
   validates :email, :first_name, :last_name, :username, :city, :state, presence: true
   validates_inclusion_of :active, :in => [true, false]
   after_create :update_user_balance
@@ -40,6 +41,22 @@ class User < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+
+  def is_standard_user?
+    result = false
+    if self.type == "Standard"
+      result = true
+    end
+    return result
+  end
+
+  def is_institution_user?
+    result = false
+    if self.type == "Institution"
+      result = true
+    end
+    return result
   end
 
   def active_portfolio

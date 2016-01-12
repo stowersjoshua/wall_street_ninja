@@ -1,11 +1,11 @@
 <div class="container">
-	<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-	  <div class="row">
-			<div class="col-md-4 ">&nbsp;</div>
-			<div class="col-md-4">
-				<h2>Sign up</h2>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <div class="row">
+      <div class="col-md-4 ">&nbsp;</div>
+      <div class="col-md-4">
+        <h2>Sign up</h2>
   			<%= f.error_notification %>
-
+        <%= f.collection_radio_buttons :type, [['Standard', 'Standard'] ,['Institution', 'Institution']], :first, :last, checked: ['Standard', 'Standard'] %>
   			<div class="form-inputs">
 					<%= f.input :username, required: true, autofocus: true, input_html: {class: "form-control"} %>
  				</div>
