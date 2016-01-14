@@ -28,7 +28,7 @@
 						<%= academy.description %>
 					</td>
 					<td>
-						<%= link_to "Register", send_joining_request_academy_path(academy), class: "btn btn-primary" %>
+						<%= link_to "Register", send_joining_request_academy_path(academy), class: "btn btn-primary register_request", data: { disable_with: "please wait..." } %>
 					</td>
 				</tr>
 			<% end %>

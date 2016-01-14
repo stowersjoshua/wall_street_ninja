@@ -30,7 +30,7 @@ class AcademiesController < ApplicationController
 	def send_joining_request
 		academy = Academy.find(params[:id])
 		registration = Registration.create(standard_id: current_user.id, academy_id: academy.id) 
-		UserMailer.delay.registration_request(registration)
+		UserMailer.registration_request(registration).deliver
 		flash[:notice] = "Your request delivered successfully"
 		redirect_to :back
 	end
