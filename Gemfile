@@ -54,6 +54,8 @@ gem 'httparty'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'delayed_job_active_record'
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'dotenv-rails'

@@ -66,4 +66,8 @@ class User < ActiveRecord::Base
   def update_user_balance
     self.update_attributes(total_balance: 100000)
   end
+
+  def full_name
+    self.first_name.try(:humanize) + " " + self.last_name.try(:humanize)
+  end
 end

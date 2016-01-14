@@ -32,9 +32,15 @@
               <%= link_to "Learning Lounge", learning_lounge_landings_path %>
             </li>
             <li>
+              <%= link_to "Academies", academies_lists_academies_path %>
+            </li>
+            <li>
               <%= link_to "SignOut", destroy_user_session_path, method: :delete %>
             </li>
           <% else %>
+            <li>
+              <%= link_to "Registrations", registration_list_academies_path %>
+            </li>
             <li>
               <%= link_to "SignOut", destroy_user_session_path, method: :delete %>
             </li>

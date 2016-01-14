@@ -23,6 +23,43 @@ class AcademiesController < ApplicationController
 		redirect_to path
 	end
 
+	def academies_lists
+		@academies = Academy.all
+	end
+
+	def send_joining_request
+		academy = Academy.find(params[:id])
+		registration = Registration.create(standard_id: current_user.id, academy_id: academy.id) 
+		UserMailer.delay.registration_request(registration)
+		flash[:notice] = "Your request delivered successfully"
+		redirect_to :back
+	end
+
+	def registration_list
+		if current_user.is_institution_user?
+			academies = current_user.academies
+			@registrations = academies.map(&:registrations).flatten.sort_by{|e| e[:created_at]}.reverse
+		else
+			flash[:notice] = "Please login as Insitutional User."
+			redirect_to root_path
+		end
+	end
+
+	def approve_registration_request
+		registration = Registration.find(params[:id])
+		registration.status = "approve"
+		registration.save
+		registration_list
+		flash[:message] = "Registration request approved successfully"
+	end
+
+	def remove_registration_request
+		registration = Registration.find(params[:id])
+		registration.destroy
+		registration_list
+		flash[:message] = "Registration request rejected successfully"
+	end
+
 	private
 	def academy_permitted_params
 		params.require(:academy).permit!

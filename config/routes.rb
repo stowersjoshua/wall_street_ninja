@@ -85,7 +85,17 @@ Rails.application.routes.draw do
   end
 
   # resources :institutions
-  resources :academies
+  resources :academies do
+    collection do
+      get :academies_lists
+      get :registration_list
+    end
+    member do
+      get :send_joining_request
+      get :approve_registration_request
+      delete :remove_registration_request
+    end
+  end
 
   resources :sales do
     collection do

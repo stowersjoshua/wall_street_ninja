@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112041359) do
+ActiveRecord::Schema.define(version: 20160114053256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,22 @@ ActiveRecord::Schema.define(version: 20160112041359) do
     t.datetime "updated_at"
   end
 
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
   create_table "plans", force: true do |t|
     t.string   "name"
     t.integer  "registration_limit", default: 0
@@ -122,6 +138,17 @@ ActiveRecord::Schema.define(version: 20160112041359) do
   end
 
   add_index "portfolios", ["user_id"], name: "index_portfolios_on_user_id", using: :btree
+
+  create_table "registrations", force: true do |t|
+    t.integer  "standard_id"
+    t.integer  "academy_id"
+    t.string   "status",      default: "pending"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "registrations", ["academy_id"], name: "index_registrations_on_academy_id", using: :btree
+  add_index "registrations", ["standard_id"], name: "index_registrations_on_standard_id", using: :btree
 
   create_table "stocks", force: true do |t|
     t.integer  "company_id"
