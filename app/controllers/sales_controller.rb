@@ -5,10 +5,11 @@ class SalesController < ApplicationController
 		@portfolio = current_user.active_portfolio
 		if @portfolio.present?
 			@companies = @portfolio.companies.present? ? @portfolio.companies.map{|c| [c.name, c.id]} : [] 
+			@sales = @portfolio.sales
 		else
 			@companies = []
+			@sales = []
 		end
-		@sales = @portfolio.sales
 	end
 
 	def fetch_share_quantity
