@@ -11,10 +11,10 @@
 			<% @companies.each_with_index do |company, index| %>
 				<tr>
 					<td><%= index+1 %>.</div>
-					<td><%= company.name %></td>
+					<td><%= link_to company.name, company_path(company) %></td>
 					<td><%= company.city %></td>
 					<td><%= company.state %></td>
-					<td><%= link_to "Company Details", company_details_landing_path(company) %></td>
+					<td><%= link_to "Purchase", purchase_company_path(company) %> </td>
 				</tr>
 			<% end %>
 		</tbody>

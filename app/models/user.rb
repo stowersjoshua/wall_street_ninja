@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   #->Prelang (user_login/devise)
   has_many :portfolios, dependent: :destroy
 
-  validates :email, :first_name, :last_name, :username, :city, :state, presence: true
+  validates :email, :username, presence: true
+  validates :username, uniqueness: true
   validates_inclusion_of :active, :in => [true, false]
   after_create :update_user_balance
   attr_accessor :login

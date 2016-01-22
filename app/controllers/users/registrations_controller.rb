@@ -17,6 +17,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:email, :username, :first_name, :last_name, :city, :state, :type)
+    devise_parameter_sanitizer.for(:sign_up).push(:email, :username, :first_name, :last_name, :age, :city, :state, :type, :institution_type)
+  end
+
+  def after_sign_up_path_for(resource)
+    if resource.is_standard_user?
+      user_profile_users_path
+    else
+      super
+    end
   end
 end

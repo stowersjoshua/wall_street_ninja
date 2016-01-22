@@ -19,7 +19,7 @@
 		<tbody>
 			<% @data.each_with_index do |purchase, index| %>
 				<tr>
-					<td><%= link_to purchase[:company_name], company_details_landing_path(purchase[:company_id]) %></td>
+					<td><%= link_to purchase[:company_name], company_path(purchase[:company_id]) %></td>
 					<td><%= purchase[:live_price] %></td>
 					<td><%= purchase[:quantity] %></td>
 					<td><%= purchase[:inv_price] %></td>

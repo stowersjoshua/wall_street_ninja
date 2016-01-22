@@ -203,6 +203,8 @@ ActiveRecord::Schema.define(version: 20160114053256) do
     t.boolean  "active",                 default: true
     t.float    "total_balance"
     t.string   "type"
+    t.string   "institution_type"
+    t.integer  "age"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end

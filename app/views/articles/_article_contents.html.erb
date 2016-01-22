@@ -9,7 +9,7 @@
 			<% @articles.each_with_index do |article, index| %>
 				<tr>
 					<td><%= index+1 %>.</div>
-					<td><%= link_to article.title, learning_lounge_detail_landing_path(article) %></td>
+					<td><%= link_to article.title, article_path(article) %></td>
 					<td><%= article.summary.truncate(20).html_safe %></td>
 				</tr>
 			<% end %>

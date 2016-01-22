@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => "testatdev@gmail.com"
+  default :from => "Info@wallstreet.ninja"
   
   def registration_request(register)
     @requester = register.standard

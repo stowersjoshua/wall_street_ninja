@@ -60,6 +60,11 @@ class AcademiesController < ApplicationController
 		flash[:message] = "Registration request rejected successfully"
 	end
 
+	def search
+		search = params[:search].downcase
+    @academies = Academy.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%#{search}%", "%#{search}%")
+	end
+
 	private
 	def academy_permitted_params
 		params.require(:academy).permit!
