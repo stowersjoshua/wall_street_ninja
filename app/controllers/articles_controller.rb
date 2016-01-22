@@ -10,7 +10,7 @@ class ArticlesController < ApplicationController
   end
 
   def search
-    search = params[:search]
-    @articles = Article.where("title LIKE ? OR summary LIKE ?", "%#{search}%", "%#{search}%")
+    search = params[:search].downcase
+    @articles = Article.where("lower(title) LIKE ? OR lower(summary) LIKE ?", "%#{search}%", "%#{search}%")
   end 
 end
