@@ -39,8 +39,8 @@
 						<%= port.balance %>
 					</td>
 					<td>
-						<%= link_to_if ((port.active == true) ? false : true), "Make Active", change_status_portfolio_path(port), remote: true %>  |  
-						<%= link_to "Edit", edit_portfolio_path(port) %>  |  
+						<%= link_to_if ((port.active == true) ? false : true), "Make Active", change_status_portfolio_path(port), remote: true %>  <!-- |  
+						<%#= link_to "Edit", edit_portfolio_path(port) %> -->  |  
 						<%= link_to "Delete", portfolio_path(port), method: :delete %>
 					</td>
 				</tr>
