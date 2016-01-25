@@ -2,7 +2,8 @@ class PortfoliosController < ApplicationController
 	before_action :authenticate_user!
 	
 	def index
-		@portfolios = current_user.portfolios
+		portfolio = current_user.active_portfolio
+		@purchases = portfolio.purchases
 	end
 
 	def new
