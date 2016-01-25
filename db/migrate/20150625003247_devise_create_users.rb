@@ -38,7 +38,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :city
       t.string :state
       t.boolean :active, default: true
-      t.float :total_balance
+      t.float :total_balance, default: 0
       t.string :type
       t.string :institution_type
       t.integer :age

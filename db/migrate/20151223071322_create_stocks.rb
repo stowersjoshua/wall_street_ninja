@@ -4,9 +4,9 @@ class CreateStocks < ActiveRecord::Migration
       t.references :company, index: true
     	t.references :portfolio, index: true
       t.string :type
-      t.integer :quantity
-      t.float :price
-      t.float :total_price
+      t.integer :quantity, default: 0
+      t.float :price, default: 0
+      t.float :total_price, default: 0
 
       t.timestamps
     end

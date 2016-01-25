@@ -14,7 +14,7 @@
         <ul class="nav navbar-nav">
           <% if !user_signed_in? %>
             <li><a href="/login">SignIn</a></li>
-            <li><a href="/signup?u=1">SignUp</a></li>
+            <li><a href="/signup">SignUp</a></li>
             <li><a href="/signup?u=2">Create an institutional account</a></li>
           <% elsif current_user.is_standard_user? %>
             <%= render "/shared/standard_user_header" %>

@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def update
   	user = User.find(params[:id])
   	if user.update_attributes(standard_permitted_params)
+      Portfolio.create(user_id: user.id, active: true, name: "primary") unless user.active_portfolio.present?
   		flash[:notice] = "Signup process completed successfully"	
   		redirect_to root_path
   	else

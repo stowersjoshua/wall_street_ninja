@@ -24,12 +24,10 @@ class CompaniesController < ApplicationController
   end
 
   def create_purchase
-    portfolio = current_user.active_portfolio
     purchase = Purchase.new(purchase_permitted_params)
     if purchase.total_price.to_f < current_user.total_balance.to_f 
       purchase.save
-      current_user.total_balance -= purchase.total_price
-      current_user.save
+      current_user.update_total_balance(purchase)
       flash[:notice] = "Saved successfully"
       path = companies_path
     else

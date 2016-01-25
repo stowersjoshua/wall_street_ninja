@@ -71,4 +71,13 @@ class User < ActiveRecord::Base
   def full_name
     self.first_name.try(:humanize) + " " + self.last_name.try(:humanize)
   end
+
+  def update_total_balance purchase
+    portfolio = self.active_portfolio
+    portfolio.balance += purchase.total_price
+    portfolio.save
+
+    self.total_balance -= purchase.total_price
+    self.save 
+  end
 end

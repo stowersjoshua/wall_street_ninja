@@ -56,7 +56,7 @@ class PortfoliosController < ApplicationController
 		portfolio = Portfolio.find(params[:id])
 		current_user.portfolios.update_all(active: false)
 		if portfolio.update_attributes(active: true)
-			@portfolios = Portfolio.all
+			@portfolios = current_user.portfolios
 			flash[:notice] = "Portfolio status change successfully."
 		end
 	end

@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20160114053256) do
 
   create_table "bonus", force: true do |t|
     t.integer  "portfolio_id"
-    t.float    "amount"
+    t.float    "amount",       default: 0.0
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 20160114053256) do
   end
 
   create_table "portfolios", force: true do |t|
-    t.float    "balance"
+    t.float    "balance",    default: 0.0
     t.boolean  "active",     default: false
     t.string   "name"
     t.integer  "user_id"
@@ -154,9 +154,9 @@ ActiveRecord::Schema.define(version: 20160114053256) do
     t.integer  "company_id"
     t.integer  "portfolio_id"
     t.string   "type"
-    t.integer  "quantity"
-    t.float    "price"
-    t.float    "total_price"
+    t.integer  "quantity",     default: 0
+    t.float    "price",        default: 0.0
+    t.float    "total_price",  default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 20160114053256) do
     t.string   "city"
     t.string   "state"
     t.boolean  "active",                 default: true
-    t.float    "total_balance"
+    t.float    "total_balance",          default: 0.0
     t.string   "type"
     t.string   "institution_type"
     t.integer  "age"
