@@ -15,7 +15,7 @@
 # Learn more: http://github.com/javan/whenever
 set :environment, "production"
 set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
-set :bundle_command, "/app/vendor/bundle exec"
+set :bundle_command, "/app/bin/bundle exec"
 
 every 1.day, :at => '12 am' do
 	rake "quandl_task:update_price"
