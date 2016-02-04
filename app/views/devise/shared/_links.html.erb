@@ -23,3 +23,7 @@
     <!-- <%#= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br /> -->
   <%# end -%>
 <%# end -%>
+
+<%- if controller_name != 'sessions' && !params[:u].present? %>
+  <a href="/signup?u=2">Create an institutional account</a>
+<% end -%>

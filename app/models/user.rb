@@ -7,13 +7,18 @@ class User < ActiveRecord::Base
 
   #->Prelang (user_login/devise)
   has_many :portfolios, dependent: :destroy
-
+  has_many :registrations, dependent: :destroy
+  has_many :institution_registered_academies, -> {where("registrations.reg_type = 'Institution'")}, through: :registrations, source: :academy
+  has_many :standard_registered_academies, -> {where("registrations.reg_type = 'Standard'")}, through: :registrations, source: :academy 
+  
   validates :email, :username, presence: true
   validates :username, uniqueness: true
   validates_inclusion_of :active, :in => [true, false]
   after_create :update_user_balance
   attr_accessor :login
   devise authentication_keys: [:login]
+
+  SEARCH_CATAGORIES = [[ "Search for a Company", "Company"], ["Search for an Academy", "Academy"], ["Search for an Article", "Article"]]
   
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(provider: auth.provider, uid: auth.uid).first
@@ -60,6 +65,36 @@ class User < ActiveRecord::Base
     return result
   end
 
+  def is_registered? academy
+    register = Registration.where(academy_id: academy.id, user_id: self.id, status: "approve")
+    if register.present?
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_pending? academy
+    register = Registration.where(academy_id: academy.id, user_id: self.id, status: "pending")
+    if register.present?
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_owner? academy
+    acd_ids = []
+    academies = self.academies
+    acd_ids = academies.ids if academies.present?
+
+    if acd_ids.include? academy.id
+      return true
+    else
+      return false
+    end
+  end
+
   def active_portfolio
     self.portfolios.where(active: true).first
   end
@@ -73,11 +108,32 @@ class User < ActiveRecord::Base
   end
 
   def update_total_balance purchase
-    portfolio = self.active_portfolio
-    portfolio.balance += purchase.total_price
-    portfolio.save
-
     self.total_balance -= purchase.total_price
-    self.save 
+    self.save
+  end
+
+  def fetch_quandl_data active_portfolio
+    main_data = []
+    if active_portfolio.present?
+      purchases = active_portfolio.purchases 
+      if purchases.present?
+        purchases.each do |p|
+          live_price = p.company.current_price
+          latest_amount = (p.quantity * live_price).round(2)
+          data = {}
+          data[:purchase_id] = p.id
+          data[:company_id] = p.company.id
+          data[:company_name] = p.company.name
+          data[:live_price] = live_price
+          data[:quantity] = p.quantity
+          data[:inv_price] = p.price 
+          data[:overall_gain] = (latest_amount - p.total_price).round(2)
+          data[:inv_date] = p.created_at.strftime("%d/%m/%Y")
+          main_data << data
+        end
+      end
+    end
+
+    return main_data
   end
 end

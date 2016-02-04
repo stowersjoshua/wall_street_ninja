@@ -7,33 +7,30 @@ class LandingsController < ApplicationController
         unless current_user.first_name.present?
           redirect_to user_profile_users_path
         else 
-          @portfolios = current_user.portfolios.where(active: false)
           @active_portfolio = current_user.active_portfolio
-          if @active_portfolio.present?
-            purchases = @active_portfolio.purchases 
-            if purchases.present?
-              purchases.each do |p|
-                api_data = QuandlService::Quandl.get_quandl_data(p.company.id, 1)
-                live_price = api_data["dataset"]["data"][0][4]
-                latest_amount = (p.quantity * live_price).round(2)
-                data = {}
-                data[:company_id] = p.company.id
-                data[:company_name] = p.company.name
-                data[:live_price] = live_price
-                data[:quantity] = p.quantity
-                data[:inv_price] = p.price 
-                data[:inv_amount] = p.total_price
-                data[:lat_value] = latest_amount
-                data[:overall_gain] = (latest_amount - p.total_price).round(2)
-                data[:inv_date] = p.created_at.strftime("%d/%m/%Y")
-                @data << data
-              end
-            end
-          end
+          @data = current_user.fetch_quandl_data(@active_portfolio)
+          @academies = current_user.registrations.where(status: "approve").map(&:academy).flatten
+          @assignments = @academies.map(&:assignments).flatten
         end
-      else
-        redirect_to academies_path
+      elsif current_user.is_institution_user?
+        @owned_academies = current_user.academies
+        @mod_academies = current_user.institution_registered_academies
+        @student_requests = current_user.registrations.where(reg_type: "Standard", status: "pending")
+        @moderator_requests = current_user.registrations.where(reg_type: "Institution", status: "pending")
+        @assignments = current_user.academies.map(&:assignments).flatten
+        @moderator_assignments = current_user.institution_registered_academies.map(&:assignments).flatten
       end
     end
+  end
+
+  def search
+    if params[:category] == "Company"
+      path = companies_path(search: params[:search], category: params[:category])
+    elsif params[:category] == "Academy"
+      path = academies_path(search: params[:search], category: params[:category])
+    elsif params[:category] == "Article"
+      path = articles_path(search: params[:search], category: params[:category])
+    end
+    redirect_to path
   end
 end

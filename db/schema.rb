@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127042435) do
+ActiveRecord::Schema.define(version: 20160127121152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,10 +58,23 @@ ActiveRecord::Schema.define(version: 20160127042435) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
+    t.string   "author"
     t.text     "summary"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "assignments", force: true do |t|
+    t.integer  "academy_id"
+    t.string   "title"
+    t.string   "assignment_type"
+    t.text     "description"
+    t.datetime "due_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assignments", ["academy_id"], name: "index_assignments_on_academy_id", using: :btree
 
   create_table "bonus", force: true do |t|
     t.integer  "portfolio_id"
@@ -94,6 +107,7 @@ ActiveRecord::Schema.define(version: 20160127042435) do
     t.integer  "sic_code"
     t.string   "free_code"
     t.string   "premium_code"
+    t.float    "current_price", default: 0.0
     t.string   "city"
     t.string   "state"
     t.string   "symbol"
@@ -129,7 +143,6 @@ ActiveRecord::Schema.define(version: 20160127042435) do
   end
 
   create_table "portfolios", force: true do |t|
-    t.float    "balance",    default: 0.0
     t.boolean  "active",     default: false
     t.string   "name"
     t.integer  "user_id"
@@ -140,15 +153,16 @@ ActiveRecord::Schema.define(version: 20160127042435) do
   add_index "portfolios", ["user_id"], name: "index_portfolios_on_user_id", using: :btree
 
   create_table "registrations", force: true do |t|
-    t.integer  "standard_id"
+    t.integer  "user_id"
     t.integer  "academy_id"
-    t.string   "status",      default: "pending"
+    t.string   "status",     default: "pending"
+    t.string   "reg_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "registrations", ["academy_id"], name: "index_registrations_on_academy_id", using: :btree
-  add_index "registrations", ["standard_id"], name: "index_registrations_on_standard_id", using: :btree
+  add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "stocks", force: true do |t|
     t.integer  "company_id"
@@ -204,10 +218,10 @@ ActiveRecord::Schema.define(version: 20160127042435) do
     t.float    "total_balance",          default: 0.0
     t.string   "type"
     t.string   "institution_type"
+    t.string   "institution_name"
     t.integer  "age"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.string   "institution_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

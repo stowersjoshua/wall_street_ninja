@@ -1,0 +1,77 @@
+<% if @academies.present? %>
+	<div class="row">
+		<div class="col-md-10">
+			<h2>Academy List</h2>
+		</div>
+		<div class="col-md-2">
+			<%= link_to "New Academy", new_academy_path, class: "btn btn-primary" %>
+		</div>
+	</div>
+	<hr>
+	<table class="table table-striped table-hover">
+		<thead>
+			<th>
+				<strong>Index</strong>
+			</th>
+			<th>
+				<strong>Academy Name</strong>
+			</th>
+			<th>
+				<strong>Institution Name</strong>
+			</th>
+			<th>
+				<strong>Owner Name</strong>
+			</th>
+			<th>
+				<strong>Moderator Names</strong>
+			</th>
+			<th>
+				<strong>Description</strong>
+			</th>
+			<th>
+				<strong>Date Created</strong>
+			</th>
+			<th>
+				<strong>Action</strong>
+			</th>
+		</thead>
+		<tbody>
+			<% @academies.each_with_index do |academy, index| %>
+				<tr>
+					<td>
+						<%= index+1 %>.
+					</td>
+					<td>
+						<%= link_to academy.name.humanize, academy_path(academy) %>
+					</td>
+					<td>
+						<%= academy.owner.institution_name %>
+					</td>
+					<td>
+						<%= academy.owner.full_name %>
+					</td>
+					<td>
+						<%= academy.moderatores.pluck(:first_name).join(", ") %>
+					</td>
+					<td>
+						<%= academy.description.truncate(20) %>
+					</td>
+					<td>
+						<%= academy.created_at.strftime("%d/%m/%Y") %>
+					</td>
+					<td>
+						<% if current_user.is_pending? academy %>
+							Request Already Pending. 
+						<% elsif current_user.is_registered? academy %>
+							Already Registered.
+						<% elsif current_user.is_owner? academy %>
+							You owned that academy.
+						<% else %>
+							<%= link_to "Register as Moderator", send_joining_request_academy_path(academy), class: "btn btn-primary register_request", data: { disable_with: "please wait..." } %>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+<% end %>

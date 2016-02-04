@@ -1,14 +1,12 @@
-<h1>Welcome to Wall Street Ninja</h1>
-<% if user_signed_in? %>
-	<% if current_user.portfolios.present? %>
-		<% if @active_portfolio.present? %>
-			<%= render "/portfolios/portfolio_details" %>
-		<% else %>
-			<p>please make your portfolio active.</p>
+<div class="container">
+	<% if user_signed_in? %>
+		<% if current_user.is_standard_user? %>
+			<%= render "standard_user_dashboard" %>
+		<% elsif current_user.is_institution_user? %>
+			<%= render "institution_user_dashboard" %>
 		<% end %>
 	<% else %>
-		<p>Please create portfolio and make that's status active.</p>
+		<h1>Welcome to Wall Street Ninja</h1>
+		<p>If you are already login, please <%= link_to "Sign In", new_user_session_path() %>, Otherwise please <%= link_to "Sign Up", new_user_registration_path %> First.</p>
 	<% end %>
-<% else %>
-	<p>If you are already login, please <%= link_to "Sign In", new_user_session_path() %>, Otherwise please <%= link_to "Sign Up", new_user_registration_path() %> First.</p>
-<% end %>
+</div>

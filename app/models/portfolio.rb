@@ -11,32 +11,13 @@ class Portfolio < ActiveRecord::Base
   validates_inclusion_of :active, :in => [true, false]
   accepts_nested_attributes_for :purchases, allow_destroy: true
 
-
-  def update_purchase_quantity company_id, total_shares
-    purchases = self.purchases.where(company_id: company_id)
-    if purchases.present?
-      purchases.each do |purchase|
-        if purchase.quantity > total_shares
-          total_shares = purchase.quantity - total_shares
-          total_price = total_shares * purchase.price
-          purchase.update_attributes(quantity: total_shares, total_price: total_price)
-          self.update_portfolio_balance
-          return
-        elsif purchase.quantity < total_shares
-          total_shares = total_shares - purchase.quantity
-          purchase.update_attributes(quantity: 0, total_price: 0)
-        elsif purchase.quantity == total_shares
-          total_shares = total_shares - purchase.quantity
-          purchase.update_attributes(quantity: 0, total_price: 0)
-          self.update_portfolio_balance
-          return
-        end
-      end
+  def update_purchase purchase, quantity
+    if purchase.quantity > quantity
+      total_stock = purchase.quantity - quantity
+      total_price = total_stock * purchase.price
+      purchase.update_attributes(quantity: total_stock, total_price: total_price)
+    elsif purchase.quantity == quantity
+      purchase.destroy
     end
-  end
-
-  def update_portfolio_balance
-    balance = self.purchases.pluck(:total_price).sum
-    self.update_attributes(balance: balance) 
   end
 end

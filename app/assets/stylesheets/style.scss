@@ -19,6 +19,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 999999;
 }
 
 .filter_loader img{  
@@ -29,8 +30,19 @@
   left: 50%;
   margin: -30px 0 0 -30px;
 }
-
+.mtop9{margin-top:9px; width: 40%;}
 .wdt60{
-  width: 60%;
-  float: left;
+    width: 37%;
+    float: left;
+    height: 30px;
+    padding: 4px;
+    font-size: 13px;
 }
+.wdt60.mrht6{    margin-right: 5px;}
+.search_btn{padding: 4px 12px;
+    margin-left: 5px;}
+.custom_modal{top:20%;}
+.cmpny_label{margin-top:10px;}
+.name_fld{margin-bottom:10px;}
+
+.dis_inlne{display: inline-block;}

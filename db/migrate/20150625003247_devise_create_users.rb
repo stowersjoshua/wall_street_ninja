@@ -41,6 +41,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.float :total_balance, default: 0
       t.string :type
       t.string :institution_type
+      t.string :institution_name
       t.integer :age
 
       t.timestamps null: false

@@ -3,14 +3,6 @@
 		<div class="col-md-6">
 			<h1>Academy List</h1>
 		</div>
-		<div class="col-md-6">
-			<%= form_tag("/academies/search", method: :get, remote: true) do %>
-				<div class="form-inputs">
-          <%= text_field_tag "search", "", placeholder: "Academy Name Or Description", class: "form-control wdt60" %>
-          <%= submit_tag "Search", class: "btn btn-primary" %>
-        </div>
-      <% end %>
-		</div>
 	</div>
 	<div id="academy_contents">		
 		<%= render "academy_list" %>

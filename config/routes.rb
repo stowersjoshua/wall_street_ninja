@@ -21,10 +21,10 @@ Rails.application.routes.draw do
   resources :users, only: [:update]
 
   resources :academies do
+    resources :assignments
     collection do
       get :academies_lists
       get :registration_list
-      get :search
     end
     member do
       get :send_joining_request
@@ -33,12 +33,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sales do
-    collection do
-      get :fetch_share_quantity
-      post :sale_shares
-    end
-  end
 
   resources :portfolios do 
     member do 
@@ -48,18 +42,14 @@ Rails.application.routes.draw do
   end
 
   resources :companies do
-    collection do
-      get :search
-    end
-    member do
-      get :purchase
-      post :create_purchase
-    end
+    resources :purchases
+    resources :sales 
   end
   
-  resources :articles do
+  resources :articles 
+  resources :landings, path: "/" do
     collection do
-      get :search
+      post :search  
     end
   end
 

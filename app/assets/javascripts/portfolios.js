@@ -29,15 +29,6 @@ $(document).ready(function(){
 		$("#portfolio_balance").val(total_val.toFixed(2));
 	});
 
-	$(document).on("change", "#company_change", function(){
-		var company_id = $(this).val()
-		if(company_id){
-			var url = "/sales/fetch_share_quantity";
-			$.get(url, {company_id: company_id, format: "js"}, function (data) {
-	    });
-		}
-	});
-
 	$(document).on("click", "#rm_port", function(){
 		var total_val = 0
 		$(".total_price:visible").each(function(){
@@ -46,5 +37,13 @@ $(document).ready(function(){
 				$("#portfolio_balance").val(total_val);
 			}
 		});
+	});
+
+	$(document).on("click", ".close_btn", function(){
+		$("#modal_contents").empty();
+	});
+
+	$(document).on("submit", "#new_sale, #new_purchase", function(){
+		$(".filter_loader").removeClass("dis_none");
 	});
 });

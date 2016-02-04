@@ -2,7 +2,12 @@ class AcademiesController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
-		@academies = current_user.academies
+		if params[:search].present?
+  	  search = params[:search].downcase
+      @academies = Academy.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%#{search}%", "%#{search}%")
+    else
+			@academies = Academy.all
+		end
 	end
 
 	def new
@@ -23,22 +28,43 @@ class AcademiesController < ApplicationController
 		redirect_to path
 	end
 
+	def show
+		@academy = Academy.find(params[:id])
+	end
+	
+	def update
+		academy = Academy.find(params[:id])
+		if academy.update_attributes(academy_permitted_params)
+			msg = "Academy information updated successfully."
+			path = academies_path
+		else
+			msg = academy.errors.full_messages.first
+			path = :back
+		end
+		flash[:notice] = msg
+		redirect_to path
+	end
+
 	def academies_lists
 		@academies = Academy.all
 	end
 
 	def send_joining_request
 		academy = Academy.find(params[:id])
-		registration = Registration.create(standard_id: current_user.id, academy_id: academy.id) 
-		UserMailer.registration_request(registration).deliver
+		registration = Registration.create(user_id: current_user.id, academy_id: academy.id, reg_type: current_user.type) 
+		if current_user.is_institution_user?
+			UserMailer.moderator_registration_request(registration).deliver
+		else
+			UserMailer.registration_request(registration).deliver
+		end
 		flash[:notice] = "Your request delivered successfully"
 		redirect_to :back
 	end
 
 	def registration_list
 		if current_user.is_institution_user?
-			academies = current_user.academies
-			@registrations = academies.map(&:registrations).flatten.sort_by{|e| e[:created_at]}.reverse
+			@standard_registrations = current_user.academies.map(&:registrations).flatten.select{|reg| reg.reg_type == "Standard"}.sort_by{|e| e[:created_at]}.reverse
+			@institution_registrations = current_user.academies.map(&:registrations).flatten.select{|reg| reg.reg_type == "Institution"}.sort_by{|e| e[:created_at]}.reverse
 		else
 			flash[:notice] = "Please login as Insitutional User."
 			redirect_to root_path
@@ -58,11 +84,6 @@ class AcademiesController < ApplicationController
 		registration.destroy
 		registration_list
 		flash[:message] = "Registration request rejected successfully"
-	end
-
-	def search
-		search = params[:search].downcase
-    @academies = Academy.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%#{search}%", "%#{search}%")
 	end
 
 	private

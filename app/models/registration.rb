@@ -1,6 +1,6 @@
 class Registration < ActiveRecord::Base
-	belongs_to :standard
+	belongs_to :user
 	belongs_to :academy
 
-	validates :standard_id, presence: true
+	validates :user_id, :reg_type, presence: true
 end

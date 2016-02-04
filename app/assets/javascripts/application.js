@@ -14,9 +14,16 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery_nested_form
+//= require datepickr
 //= require jquery.growl.js
 //= require ckeditor/init
 //= require_tree .
+
+$(document).ready(function(){
+  $( ".datepicker" ).datepicker({
+    dateFormat: "dd/mm/yy"
+  });
+});
 
 function show_flash(message){
   if(message)

@@ -6,8 +6,10 @@
 	</div>
 	<div id="article_contents">		
 		<% if @article.present? %>
-			<h2><strong><%= @article.title %></strong></h2>
-			<%= @article.summary.html_safe %>
+			<h2><%= @article.title %></h2>
+			Author: <%= @article.author.try(:titleize) %>
+			Date Posted: <%= @article.created_at.strftime("%d/%m/%Y") %>
+			Article Text: <%= @article.summary.html_safe %>
 		<% end %>
 	</div>		
 </div>	

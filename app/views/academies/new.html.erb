@@ -4,41 +4,7 @@
       <h1>Create New Academy</h1>
     </div>
   </div>
-  <%= simple_nested_form_for(@academy, url: academies_path, method: :post) do |f| %>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-inputs">
-          <%= f.input :name, required: true, placeholder: "Acedemy Name", input_html: {class: 'form-control'} %>
-        </div>
-      </div>
-    </div>
-
-    <%= f.fields_for :subscription do |s| %>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-inputs">
-            <%= s.input :plan_id, collection: Plan.all.map{|p| [p.name, p.id]}, as: :select, label: "Choose plan", include_blank: false, prompt: "Select Plan", input_html: {class: 'form-control' } %>
-            <%= s.input :institution_id, as: :hidden, label: false, input_html: {class: 'form-control', value: current_user.id } %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-    <%#= f.link_to_add "+Add More Plan", :subscriptions, style: "float: right;" %>
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-inputs">
-          <%= f.input :description, required: true, placeholder: "Enter description about Acedemy", input_html: {class: 'form-control'} %>
-        </div>
-      </div>
-    </div>
-  </br>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="form-group">
-          <%= f.button :submit, "Create Acedemy", class: 'btn btn-primary', data: {disable_with: "Please Wait..."}  %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <div class="new_academy">
+    <%= render "form" %>
+  </div>
 </div>

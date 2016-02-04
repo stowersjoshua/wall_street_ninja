@@ -4,6 +4,8 @@
 	  <title>WallStreetNinja</title>
 	  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>
@@ -14,5 +16,6 @@
 		</div>
 		<%= render "shared/notification" if flash[:notice].present? %>
   	<% flash.clear %>
+  	<div id="modal_contents"></div>
 	</body>
 </html>

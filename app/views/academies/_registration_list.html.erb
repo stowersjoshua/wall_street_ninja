@@ -1,4 +1,5 @@
-<%if @registrations.present? %>
+<%if @standard_registrations.present? %>
+	<h3>Student Registraion Requests</h3>
 	<table class="table table-striped table-hover">
 		<thead>
 			<th>
@@ -18,7 +19,7 @@
 			</th>
 		</thead>
 		<tbody>
-			<% @registrations.each_with_index do |reg, index| %>
+			<% @standard_registrations.each_with_index do |reg, index| %>
 				<tr>
 					<td>
 						<%= index+1 %>.
@@ -27,7 +28,7 @@
 						<%= reg.academy.name.try(:humanize) %>
 					</td>
 					<td>
-						<%= reg.standard.full_name %>
+						<%= reg.user.full_name %>
 					</td>
 					<td>
 						<%= reg.status %>
@@ -42,6 +43,53 @@
 			<% end %>
 		</tbody>
 	</table>
-<% else %>
-	<p>No registration available...</p>
+<% end %>
+
+</br>
+
+<%if @institution_registrations.present? %>
+	<h3>Moderator Registraion Requests</h3>
+	<table class="table table-striped table-hover">
+		<thead>
+			<th>
+				<strong>Index</strong>
+			</th>
+			<th>
+				<strong>Academy Name</strong>
+			</th>
+			<th>
+				<strong>Requester Name</strong>
+			</th>
+			<th>
+				<strong>Registration Status</strong>
+			</th>
+			<th>
+				<strong>Action</strong>
+			</th>
+		</thead>
+		<tbody>
+			<% @institution_registrations.each_with_index do |reg, index| %>
+				<tr>
+					<td>
+						<%= index+1 %>.
+					</td>
+					<td>
+						<%= reg.academy.name.try(:humanize) %>
+					</td>
+					<td>
+						<%= reg.user.full_name %>
+					</td>
+					<td>
+						<%= reg.status %>
+					</td>
+					<td>
+						<% if reg.status == "pending" %>
+							<%= link_to "Approve", approve_registration_request_academy_path(reg), remote: true %> | 
+						<% end %>
+						<%= link_to "Reject", remove_registration_request_academy_path(reg), method: :delete, remote: true %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 <% end %>
