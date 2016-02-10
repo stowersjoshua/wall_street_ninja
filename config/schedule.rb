@@ -13,7 +13,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-set :environment, "production"
+# set :environment, "production"
+env :PATH, ENV['PATH']
 set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
 
 every 1.day, :at => '12 am' do
