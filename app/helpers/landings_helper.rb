@@ -1,2 +1,2 @@
-module LandingsHelper
+module LandingsHelper # :nodoc:
 end

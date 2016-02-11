@@ -1,2 +1,2 @@
-module ArticlesHelper
+module ArticlesHelper # :nodoc:
 end

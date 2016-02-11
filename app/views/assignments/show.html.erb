@@ -1,0 +1,47 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-10">
+			<h1>Assignment</h1>
+		</div>
+	</div>
+	<div class="row">
+		Assignment Title: <%= @assignment.title %>
+	</div>
+	<div class="row">
+		Assignment Type: <%= @assignment.assignment_type %>
+	</div>
+	<div class="row">
+		Due Date: <%= @assignment.due_date %>
+	</div>
+	<div class="row">
+		Assignment Description: <%= @assignment.description %>
+	</div>
+
+	<% if @articles.present? %>
+		<h4><strong> To complete the assignment read the following articles. </strong></h4>
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Index</th>
+					<th>Title</th>
+					<th>Author Name</th>
+					<th>Date Posted</th>
+					<th>Article Text</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @articles.each_with_index do |article, index| %>
+					<tr>
+						<td><%= index+1 %></td>
+						<td><%= article.title %></td>
+						<td><%= article.author %></td>
+						<td><%= article.created_at.strftime("%d/%m/%Y") %></td>
+						<td><%= article.summary.html_safe  %></td>
+						<td><%= link_to "Read", article_path(article, read: true) %></td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>	
+	<% end %>
+</div>	

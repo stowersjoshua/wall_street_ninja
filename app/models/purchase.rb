@@ -1,2 +1,2 @@
-class Purchase < Stock
+class Purchase < Stock # :nodoc:
 end

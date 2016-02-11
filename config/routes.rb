@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       get :send_joining_request
       get :approve_registration_request
       delete :remove_registration_request
+      delete :remove_users
     end
   end
 

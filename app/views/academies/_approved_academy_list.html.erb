@@ -31,7 +31,7 @@
 						<%= academy.owner.full_name %>
 					</td>
 					<td>
-						<%= academy.moderatores.map(&:first_name).join(", ") %>
+						<%= academy.moderators.map(&:first_name).join(", ") %>
 					</td>
 					<td>
 						<%= academy.description %>
@@ -75,7 +75,7 @@
 						<%= assignment.academy.name.humanize %>
 					</td>
 					<td>
-						<%= assignment.title %>
+						<%= link_to assignment.title, academy_assignment_path(assignment.academy, assignment) %>
 					</td>
 					<td>
 						<%= assignment.assignment_type %>

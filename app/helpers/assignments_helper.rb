@@ -1,2 +1,2 @@
-module AssignmentsHelper
+module AssignmentsHelper # :nodoc:
 end

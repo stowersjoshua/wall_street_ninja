@@ -1,2 +1,2 @@
-class Standard < User
+class Standard < User # :nodoc:
 end

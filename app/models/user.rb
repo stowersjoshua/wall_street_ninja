@@ -1,26 +1,26 @@
-class User < ActiveRecord::Base
+class User < ActiveRecord::Base # :nodoc:
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-        :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, omniauth_providers: [:facebook]
 
   #->Prelang (user_login/devise)
   has_many :portfolios, dependent: :destroy
   has_many :registrations, dependent: :destroy
-  has_many :institution_registered_academies, -> {where("registrations.reg_type = 'Institution'")}, through: :registrations, source: :academy
-  has_many :standard_registered_academies, -> {where("registrations.reg_type = 'Standard'")}, through: :registrations, source: :academy 
-  
+  has_many :institution_registered_academies, -> { where("registrations.reg_type = 'Institution'") }, through: :registrations, source: :academy
+  has_many :standard_registered_academies, -> { where("registrations.reg_type = 'Standard'") }, through: :registrations, source: :academy
+
   validates :email, :username, presence: true
   validates :username, uniqueness: true
-  validates_inclusion_of :active, :in => [true, false]
+  validates_inclusion_of :active, in: [true, false]
   after_create :update_user_balance
   attr_accessor :login
   devise authentication_keys: [:login]
 
-  SEARCH_CATAGORIES = [[ "Search for a Company", "Company"], ["Search for an Academy", "Academy"], ["Search for an Article", "Article"]]
-  
-  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+  SEARCH_CATAGORIES = [['Search for a Company', 'Company'], ['Search for an Academy', 'Academy'], ['Search for an Article', 'Article']].freeze
+
+  def self.find_for_facebook_oauth(auth, _signed_in_resource = nil)
     user = User.where(provider: auth.provider, uid: auth.uid).first
 
     # The User was found in our database
@@ -36,14 +36,14 @@ class User < ActiveRecord::Base
                 provider: auth.provider,
                 uid:      auth.uid,
                 email:    auth.info.email,
-                password: Devise.friendly_token[0,20])
+                password: Devise.friendly_token[0, 20])
   end
-  
+
   #->Prelang (user_login:devise/username_login_support)
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", {value: login.downcase}]).first
+      where(conditions).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
     else
       where(conditions).first
     end
@@ -51,22 +51,18 @@ class User < ActiveRecord::Base
 
   def is_standard_user?
     result = false
-    if self.type == "Standard"
-      result = true
-    end
-    return result
+    result = true if type == 'Standard'
+    result
   end
 
   def is_institution_user?
     result = false
-    if self.type == "Institution"
-      result = true
-    end
-    return result
+    result = true if type == 'Institution'
+    result
   end
 
-  def is_registered? academy
-    register = Registration.where(academy_id: academy.id, user_id: self.id, status: "approve")
+  def is_registered?(academy)
+    register = Registration.where(academy_id: academy.id, user_id: id, status: 'approve')
     if register.present?
       return true
     else
@@ -74,8 +70,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_pending? academy
-    register = Registration.where(academy_id: academy.id, user_id: self.id, status: "pending")
+  def is_pending?(academy)
+    register = Registration.where(academy_id: academy.id, user_id: id, status: 'pending')
     if register.present?
       return true
     else
@@ -83,7 +79,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_owner? academy
+  def is_owner?(academy)
     acd_ids = []
     academies = self.academies
     acd_ids = academies.ids if academies.present?
@@ -96,26 +92,26 @@ class User < ActiveRecord::Base
   end
 
   def active_portfolio
-    self.portfolios.where(active: true).first
+    portfolios.where(active: true).first
   end
 
   def update_user_balance
-    self.update_attributes(total_balance: 100000)
+    update_attributes(total_balance: 100_000)
   end
 
   def full_name
-    self.first_name.try(:humanize) + " " + self.last_name.try(:humanize)
+    first_name.try(:humanize) + ' ' + last_name.try(:humanize)
   end
 
-  def update_total_balance purchase
+  def update_total_balance(purchase)
     self.total_balance -= purchase.total_price
-    self.save
+    save
   end
 
-  def fetch_quandl_data active_portfolio
+  def fetch_quandl_data(active_portfolio)
     main_data = []
     if active_portfolio.present?
-      purchases = active_portfolio.purchases 
+      purchases = active_portfolio.purchases
       if purchases.present?
         purchases.each do |p|
           live_price = p.company.current_price
@@ -126,14 +122,14 @@ class User < ActiveRecord::Base
           data[:company_name] = p.company.name
           data[:live_price] = live_price
           data[:quantity] = p.quantity
-          data[:inv_price] = p.price 
+          data[:inv_price] = p.price
           data[:overall_gain] = (latest_amount - p.total_price).round(2)
-          data[:inv_date] = p.created_at.strftime("%d/%m/%Y")
+          data[:inv_date] = p.created_at.strftime('%d/%m/%Y')
           main_data << data
         end
       end
     end
 
-    return main_data
+    main_data
   end
 end

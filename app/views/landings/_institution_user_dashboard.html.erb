@@ -21,7 +21,7 @@
 					<% @owned_academies.each_with_index do |academy, index| %>
 						<tr>
 							<td><%= index+1 %>.</td>
-							<td><%= link_to academy.name, "javascript:void(0)" %></td>
+							<td><%= link_to academy.name, academy_path(academy) %></td>
 							<td><%= "Owner" %></td>
 						</tr>
 					<% end %>
@@ -47,7 +47,7 @@
 					<% @mod_academies.each_with_index do |academy, index| %>
 						<tr>
 							<td><%= index+1 %>.</td>
-							<td><%= link_to academy.name, "javascript:void(0)" %></td>
+							<td><%= link_to academy.name, academy_path(academy) %></td>
 							<td><%= "Moderator" %></td>
 						</tr>
 					<% end %>

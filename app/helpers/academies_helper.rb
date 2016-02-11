@@ -1,2 +1,2 @@
-module AcademiesHelper
+module AcademiesHelper # :nodoc:
 end

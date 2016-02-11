@@ -1,0 +1,49 @@
+<%= simple_nested_form_for(@assignment, url: (@assignment.new_record? ? academy_assignments_path(@academy) : academy_assignment_path(@academy, @assignment)), method: (@assignment.new_record? ? :post : :put)) do |f| %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-inputs">
+        <%= f.input :title, required: true, placeholder: "Assignment Name", input_html: {class: 'form-control'} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-inputs">
+        <%= f.input :assignment_type, collection: ["Reading", "Trading","Custom"], as: :select, label: "Choose Assignment Type", include_blank: false, prompt: "Select Assignment Type", input_html: {class: 'form-control' } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row dis_none" id="article_ids">
+    <div class="col-md-6">
+      <div class="form-inputs">
+        <%= f.input :article_ids, collection: Article.all.map{|ar| [ar.title, ar.id]}, as: :select, label: "Choose article for assignment", include_blank: false, prompt: "Select Article Type", input_html: {class: 'form-control', multiple: true} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-inputs">
+        <%= f.input :description, required: true, placeholder: "Enter description about Assignment", input_html: {class: 'form-control'} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-inputs">
+        <%= f.input :due_date, as: :string, required: true, placeholder: "Assignment due date", input_html: {class: 'form-control datepicker'} %>
+      </div>
+    </div>
+  </div>
+  </br>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= f.button :submit, "Confirm New Assignment", class: 'btn btn-primary', data: {disable_with: "Please Wait..."}  %>
+      </div>
+    </div>
+  </div>
+<% end %>

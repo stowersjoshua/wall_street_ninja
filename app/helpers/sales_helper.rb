@@ -1,2 +1,2 @@
-module SalesHelper
+module SalesHelper # :nodoc:
 end

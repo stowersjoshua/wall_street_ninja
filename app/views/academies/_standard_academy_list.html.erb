@@ -48,7 +48,7 @@
 						<%= academy.owner.full_name %>
 					</td>
 					<td>
-						<%= academy.moderatores.pluck(:first_name).join(", ") %>
+						<%= academy.moderators.pluck(:first_name).join(", ") %>
 					</td>
 					<td>
 						<%= academy.description.truncate(20) %>

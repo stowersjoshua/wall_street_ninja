@@ -42,7 +42,11 @@
 						<%= index+1 %>.
 					</td>
 					<td>
-						<%= link_to academy.name.humanize, academy_path(academy) %>
+						<% if ((current_user.is_owner? academy)||(current_user.is_registered? academy)) %>
+							<%= link_to academy.name.humanize, academy_path(academy) %>
+						<% else %>
+							<%= academy.name.humanize %>
+						<% end %>
 					</td>
 					<td>
 						<%= academy.owner.institution_name %>
@@ -51,7 +55,7 @@
 						<%= academy.owner.full_name %>
 					</td>
 					<td>
-						<%= academy.moderatores.pluck(:first_name).join(", ") %>
+						<%= academy.moderators.pluck(:first_name).join(", ") %>
 					</td>
 					<td>
 						<%= academy.description.truncate(20) %>
@@ -68,6 +72,10 @@
 							You owned that academy.
 						<% else %>
 							<%= link_to "Register as Moderator", send_joining_request_academy_path(academy), class: "btn btn-primary register_request", data: { disable_with: "please wait..." } %>
+						<% end %>
+						<% if ((current_user.is_owner? academy)||(current_user.is_registered? academy)) %>
+							|
+							<%= link_to "Edit", edit_academy_path(academy) %>
 						<% end %>
 					</td>
 				</tr>
