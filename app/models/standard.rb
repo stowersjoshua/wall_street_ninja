@@ -10,6 +10,10 @@ class Standard < User # :nodoc:
 
 	def total_earning
 		earning = self.total_balance - 100000
-		return 0 if earning < 0
+		if earning < 0
+			return 0 
+		else
+			return earning
+		end
 	end
 end
