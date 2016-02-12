@@ -78,9 +78,9 @@
 							<tr>
 								<td><%= index+1 %>.</td>
 								<td><%= student.full_name %></td>
-								<td><%=  %></td>
-								<td><%=  %></td>
-								<td><%=  %></td>
+								<td><%= student.total_purchase %></td>
+								<td><%= student.total_sales %></td>
+								<td><%= student.total_earning %></td>
 								<td><%= link_to "Delete", remove_users_academy_path(@academy, user_id: student.id), method: :delete %></td>
 							</tr>
 						<% end %>
