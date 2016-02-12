@@ -1,4 +1,4 @@
-class Ckeditor
+module Ckeditor
   class AttachmentFile < Ckeditor::Asset # :nodoc:
     mount_uploader :data, CkeditorAttachmentFileUploader,
                    mount_on: :data_file_name
