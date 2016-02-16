@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211070108) do
+ActiveRecord::Schema.define(version: 20160216055400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,38 @@ ActiveRecord::Schema.define(version: 20160211070108) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "payment_credentials", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.integer  "customer_id"
+    t.string   "last4"
+    t.datetime "exp_date"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "pincode"
+    t.string   "email"
+    t.integer  "phone_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payment_credentials", ["plan_id"], name: "index_payment_credentials_on_plan_id", using: :btree
+  add_index "payment_credentials", ["user_id"], name: "index_payment_credentials_on_user_id", using: :btree
+
+  create_table "payments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.float    "amount",          default: 0.0
+    t.string   "status",          default: "success"
+    t.integer  "transaction_id"
+    t.integer  "subscription_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["plan_id"], name: "index_payments_on_plan_id", using: :btree
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "plans", force: true do |t|
     t.string   "name"

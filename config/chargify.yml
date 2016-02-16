@@ -1,0 +1,8 @@
+development:
+  subdomain: flipout-web-development-sandbox
+  api_key: AEivQVVTrzMCptA5dXqPoY9As9ozZQL3P5HJzCqfM8
+  site_key: W7Z89pWQ1Iz4w7HIpp7JkZeE85Hhm2jDdZVwAU4NE4
+production:
+  subdomain: flipout-web-development-sandbox
+  api_key: AEivQVVTrzMCptA5dXqPoY9As9ozZQL3P5HJzCqfM8
+  site_key: W7Z89pWQ1Iz4w7HIpp7JkZeE85Hhm2jDdZVwAU4NE4

@@ -34,6 +34,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :payments do
+    collection do
+      post :new_payment
+    end
+  end
 
   resources :portfolios do 
     member do 
@@ -53,6 +58,7 @@ Rails.application.routes.draw do
       post :search  
     end
   end
+
 
   root 'landings#index'
 end

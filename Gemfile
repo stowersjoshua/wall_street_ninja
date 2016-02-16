@@ -58,6 +58,7 @@ gem 'delayed_job_active_record'
 gem 'rails_12factor', group: :production
 gem 'jquery-turbolinks'
 gem 'whenever', :require => false
+gem 'chargify_api_ares'
 
 group :development, :test do
   gem 'dotenv-rails'

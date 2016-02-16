@@ -1,0 +1,81 @@
+<%= simple_nested_form_for(@user, url: payments_path, method: :post) do |f| %>
+  <h3>Billing Information</h3>
+
+  <%= f.fields_for Academy.new, @academy do |ac| %>
+    <%= ac.input :name, as: :hidden, input_html: {value: @academy_name} %>
+    <%= ac.input :description, as: :hidden, input_html: {value: @description} %>
+    <%= ac.fields_for Subscription.new do |s| %>
+      <%= s.input :plan_id, as: :hidden, input_html: {value: @plan} %>
+      <%= s.input :instituition_id, as: :hidden, input_html: {value: @user.id} %>
+    <% end %>
+  <% end %>
+
+  <%= f.fields_for PaymentCredential.new do |p|%>  
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= p.input :last4, required: true, label: "Card No.", input_html: {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= label_tag "*Cvv" %>
+          <%= text_field_tag :cvv, nil, required: true, prompt: "CVV", class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+        <%= p.input :first_name, required: true, placeholder: "First Name", input_html: {class: 'form-control'} %>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= p.input :last_name, required: true, placeholder: "Last Name", input_html: {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= p.input :pincode, required: true, placeholder: "Pincode", input_html: {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= label_tag "*Expiry Date"%>
+          <%= p.date_select :exp_date, { :order => [ :month, :year], :start_year => Time.now.year }, required: true, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= p.input :email, required: true, placeholder: "Email", input_html: {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inputs">
+          <%= p.input :phone_number, required: true, placeholder: "Contact Number", input_html: {class: 'form-control'} %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= f.button :submit, "Confirm New Academy", class: 'btn btn-primary', data: {disable_with: "Please Wait..."}  %>
+      </div>
+    </div>
+  </div>
+<% end %>

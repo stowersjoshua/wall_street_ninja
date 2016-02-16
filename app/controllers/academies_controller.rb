@@ -22,7 +22,7 @@ class AcademiesController < ApplicationController
     academy = Academy.new(academy_permitted_params)
     if academy.save
       msg = 'Academy created successfully.'
-      path = academies_path
+      path = new_academy_payment_path(academy)
     else
       msg = academy.errors.full_messages.first
       path = :back
