@@ -10,7 +10,7 @@ class CreatePaymentCredentials < ActiveRecord::Migration
     	t.string :last_name
     	t.string :pincode
     	t.string :email
-    	t.integer :phone_number
+    	t.string :phone_number
 
       t.timestamps
     end

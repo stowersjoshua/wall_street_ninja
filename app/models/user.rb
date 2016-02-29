@@ -12,6 +12,7 @@ class User < ActiveRecord::Base # :nodoc:
   has_many :standard_registered_academies, -> { where("registrations.reg_type = 'Standard'") }, through: :registrations, source: :academy
   has_many :payment_credentials, dependent: :destroy
   has_many :payments, dependent: :destroy
+  accepts_nested_attributes_for :payment_credentials, allow_destroy: true
 
   validates :email, :username, presence: true
   validates :username, uniqueness: true

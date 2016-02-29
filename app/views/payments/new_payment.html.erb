@@ -1,16 +1,16 @@
 <%= simple_nested_form_for(@user, url: payments_path, method: :post) do |f| %>
   <h3>Billing Information</h3>
 
-  <%= f.fields_for Academy.new, @academy do |ac| %>
-    <%= ac.input :name, as: :hidden, input_html: {value: @academy_name} %>
-    <%= ac.input :description, as: :hidden, input_html: {value: @description} %>
-    <%= ac.fields_for Subscription.new do |s| %>
-      <%= s.input :plan_id, as: :hidden, input_html: {value: @plan} %>
-      <%= s.input :instituition_id, as: :hidden, input_html: {value: @user.id} %>
+  <%= f.fields_for :academies, @academy do |ac| %>
+    <%= ac.input :name, as: :hidden %>
+    <%= ac.input :description, as: :hidden %>
+    <%= ac.fields_for :subscription do |s| %>
+      <%= s.input :plan_id, as: :hidden %>
+      <%= s.input :institution_id, as: :hidden %>
     <% end %>
   <% end %>
 
-  <%= f.fields_for PaymentCredential.new do |p|%>  
+  <%= f.fields_for :payment_credentials, PaymentCredential.new do |p|%>  
     <div class="row">
       <div class="col-md-6">
         <div class="form-inputs">

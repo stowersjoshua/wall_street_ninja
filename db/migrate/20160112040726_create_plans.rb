@@ -5,6 +5,7 @@ class CreatePlans < ActiveRecord::Migration
     	t.integer :registration_limit, default: 0
     	t.float :price
     	t.text :description
+    	t.string :plan_handler
 
       t.timestamps
     end

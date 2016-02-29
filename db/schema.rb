@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 20160216055400) do
     t.string   "last_name"
     t.string   "pincode"
     t.string   "email"
-    t.integer  "phone_number"
+    t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(version: 20160216055400) do
     t.integer  "registration_limit", default: 0
     t.float    "price"
     t.text     "description"
+    t.string   "plan_handler"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
